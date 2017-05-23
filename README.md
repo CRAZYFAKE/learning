@@ -1,2 +1,2 @@
 # learning
-somethin i have learned
+something i have learned
