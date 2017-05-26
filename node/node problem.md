@@ -4,7 +4,7 @@
 
 [3.module.exports 和 exports 的区别](https://cnodejs.org/topic/5734017ac3e4ef7657ab1215)
 
-[4.console.log()是异步的吗 ，不他是同步的](http://blog.csdn.net/kissliux/article/details/19195817)
+[4.console.log()是异步的吗 ，不确定](http://blog.csdn.net/kissliux/article/details/19195817)
 
 [5.进程的当前工作目录是什么? 有什么作用?](https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/process.md#process)
 
@@ -24,6 +24,6 @@
 
 [9.在 IPC 通道建立之前, 父进程与子进程是怎么通信的? 如果没有通信, 那 IPC 是怎么建立的?](https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/process.md#%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1)
 
-[10.]()
+[10.node.js stream](https://github.com/zoubin/streamify-your-node-program)
 
 []()
