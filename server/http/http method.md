@@ -1,5 +1,31 @@
 [TOC]
 
+### HTTP METHOD
+
+一个常见的 method 列表, 关于这些 method 在 RESTful 中的一些应用的详细可以参见[Using HTTP Methods for RESTful Services](http://www.restapitutorial.com/lessons/httpmethods.html)
+
+| methods | CRUD           | 幂等   | 缓存   |
+| ------- | -------------- | ---- | ---- |
+| GET     | Read           | ✓    | ✓    |
+| POST    | Create         |      |      |
+| PUT     | Update/Replace | ✓    |      |
+| PATCH   | Update/Modify  | ✓    |      |
+| DELETE  | Delete         | ✓    |      |
+
+**幂等：**
+
+在HTTP/1.1规范中幂等性的定义是：
+
+> Methods can also have the property of "idempotence" in that (aside from error or expiration issues) the side-effects of N > 0 identical requests is the same as for a single request.
+
+从定义上看，HTTP方法的幂等性是指一次和多次请求某一个资源应该具有同样的副作用。幂等性属于语义范畴，
+
+正如编译器只能帮助检查语法错误一样，HTTP规范也没有办法通过消息格式等语法手段来定义它，这可能是它不
+
+太受到重视的原因之一。但实际上，幂等性是分布式系统设计中十分重要的概念，而HTTP的分布式本质也决定了
+
+它在HTTP中具有重要地位。
+
 ### 1.HTTP方法
 
 在一个RESTful系统里，客户端向服务端发起索取资源的操作只能通过**HTTP协议语义**来进行交互。最常用的HTTP协议语义有以下5个：

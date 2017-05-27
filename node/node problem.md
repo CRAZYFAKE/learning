@@ -26,4 +26,31 @@
 
 [10.node.js stream](https://github.com/zoubin/streamify-your-node-program)
 
+[11.动态修改 NodeJS 程序中的变量值](http://code.oneapm.com/nodejs/2015/06/27/intereference)
+
+[12.如何分析 Node.js 中的内存泄漏](https://zhuanlan.zhihu.com/p/25736931?group_id=825001468703674368)
+
 []()
+
+[]()
+
+[]()
+
+[]()
+
+[]()
+
+[]()
+
+[]()
+
+[]()
+
+[]()
+
+[]()
+
+[]()
+
+[]()
+
