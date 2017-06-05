@@ -24,7 +24,6 @@ doSomething().then(function () {
 doSomething().then(doSomethingElse());
 
 doSomething().then(doSomethingElse);
-
 ```
 
 If you know the answer, then congratulations: you're a promises ninja. You have my permission to stop reading this blog post.
