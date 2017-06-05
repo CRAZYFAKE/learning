@@ -30,7 +30,7 @@
 
 [12.如何分析 Node.js 中的内存泄漏](https://zhuanlan.zhihu.com/p/25736931?group_id=825001468703674368)
 
-[]()
+[13.nodejs优秀模块](https://github.com/sindresorhus/awesome-nodejs)
 
 []()
 
