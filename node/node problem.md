@@ -1,6 +1,8 @@
 [1.Node.js 热更新](http://blog.csdn.net/u013444046/article/details/51509053)
 
-[2.Node.js 模块循环依赖](https://cnodejs.org/topic/4f16442ccae1f4aa27001045)
+[2.Node.js 模块循环依赖](http://www.ruanyifeng.com/blog/2015/11/circular-dependency.html)
+
+  (https://cnodejs.org/topic/4f16442ccae1f4aa27001045)
 
 [3.module.exports 和 exports 的区别](https://cnodejs.org/topic/5734017ac3e4ef7657ab1215)
 
