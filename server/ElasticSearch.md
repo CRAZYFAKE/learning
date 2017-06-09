@@ -871,9 +871,7 @@ source /etc/profile
 查看是否安装成功：
 
 ```shell
-[elastic@localhost elasticsearch-5.3.2]$ java -version
-
-[elastic@localhost elasticsearch-5.3.2]$ java -version
+[elastic@localhost elasticsearch-5.4.0]$ java -version
 java version "1.8.0_131"
 Java(TM) SE Runtime Environment (build 1.8.0_131-b11)
 Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
@@ -883,19 +881,19 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
 
 #### elastic
 
-elasticsearch-5.3.2.tar.gz放在 ``/usr/local/``目录下
+elasticsearch-5.4.0.tar.gz放在 ``/usr/local/``目录下
 
 解压：
 
 ```shell
-tar -zxvf elasticsearch-5.3.2.tar.gz
+tar -zxvf elasticsearch-5.4.0.tar.gz
 ```
 
 5.x版本不能用root用户登陆，只能新建用户来启动elastic
 
 ```shell
 useradd elastic
-chown -R elastic:elastic  elasticsearch-5.3.2
+chown -R elastic:elastic  elasticsearch-5.4.0
 su elastic
 
 cd elasticsearch-xxxx
