@@ -45,11 +45,11 @@
 
 #### 上传文件
 
-![上传图片](../_picture/xl-dinary/upload image.png)
+![上传图片](../_picture/xl-dinary/upload_image.png)
 
 #### 用户认证
 
-![上传图片](../_picture/xl-dinary/auth JWT.png)
+![上传图片](../_picture/xl-dinary/auth_JWT.png)
 
 
 
