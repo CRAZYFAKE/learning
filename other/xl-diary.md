@@ -29,8 +29,8 @@
 │   ├─ middlewares/            —> 中间件，参数检验、权限判定等
 │   ├─ models/                 —> mongoose数据模型
 │   ├─ routes/                 —> 路由目录
-|   ├─ utils/				   —> 工具类目录
-├─ bin/						   —> 项目启动文件
+|   ├─ utils/                  —> 工具类目录
+├─ bin/                        —> 项目启动文件
 ├─ config/                     —> 环境配置文件，分开发、测试、生产环境
 ├─ logs/                       —> 请求日志目录，每天生成一个对应日期的文件
 ├─ public/                     —> 静态资源目录，存放上传的图片/image/upload
