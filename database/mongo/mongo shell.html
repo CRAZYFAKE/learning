@@ -1,0 +1,224 @@
+<!DOCTYPE html><html><head><title>mongo shell</title><meta charset='utf-8'><link href='https://dn-maxiang.qbox.me/res-min/themes/marxico.css' rel='stylesheet'><style></style></head><body><div id='preview-contents' class='note-content'>
+                        
+                    
+
+<div><div class="toc"><div class="toc">
+<ul>
+<li><a href="#mongo-shell">mongo shell</a><ul>
+<li><a href="#mongodump">mongodump</a></li>
+<li><a href="#mongorestore">mongorestore</a></li>
+<li><a href="#mongoexport">mongoexport</a></li>
+<li><a href="#mongoimport">mongoimport</a></li>
+<li><a href="#mongofiles">mongofiles</a></li>
+<li><a href="#mongooplog">mongooplog</a></li>
+<li><a href="#mongoperf">mongoperf</a></li>
+<li><a href="#mongos">mongos</a></li>
+<li><a href="#mongostat">mongostat</a></li>
+<li><a href="#mongotop">mongotop</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+<h1 id="mongo-shell">mongo shell</h1>
+
+<p>mongodb版本3.4.6</p>
+
+
+
+<h2 id="mongodump">mongodump</h2>
+
+<p>当前版本：r3.4.6</p>
+
+<blockquote>
+  <p>备份数据到本地 <a href="http://docs.mongodb.org/manual/reference/program/mongodump/" target="_blank">官方文档</a></p>
+</blockquote>
+
+<ol><li rel="1"><p><code>--help</code></p>
+
+<p>返回使用mongodump帮助信息</p></li>
+<li rel="2"><p><code>--version, -v</code> <br>
+版本信息</p></li>
+<li rel="3"><p><code>--quiet</code></p>
+
+<p>运行mongodump不会打印很多信息</p></li>
+<li rel="4"><p><code>--host &lt;hostname&gt;&lt;:port&gt;, -h &lt;hostname&gt;&lt;:port&gt;</code></p>
+
+<p>默认是 <code>--host localhost:27017</code></p>
+
+<p>可以同时备份多个数据库实例，使用方法<code>&lt;replSetName&gt;/&lt;hostname1&gt;&lt;:port&gt;,&lt;hostname2&gt;&lt;:port&gt;,&lt;...&gt;</code></p></li>
+<li rel="5"><p><code>--port &lt;port&gt;</code></p>
+
+<p>通过TCP连接mongodb实例的端口号，默认是27017</p></li>
+<li rel="6"><p><code>--ipv6</code></p>
+
+<p>v3.0版本已经移除</p></li>
+<li rel="7"><p><code>--ssl</code></p>
+
+<p>v2.6新添加</p>
+
+<p>通过TLS/SSL连接mongo实例</p></li>
+<li rel="8"><p><code>--sslCAFile &lt;filename&gt;</code></p>
+
+<p>v2.6新添加</p>
+
+<p>通过TLS/SSL连接mongo实例，以.pem结尾的文件</p></li>
+<li rel="9"><p><code>--username &lt;username&gt;, -u &lt;username&gt;</code></p>
+
+<p>用户名</p></li>
+<li rel="10"><p><code>--password &lt;password&gt;, -p &lt;password&gt;</code></p>
+
+<p>对应用户名的密码</p></li>
+<li rel="11"><p><code>--db &lt;database&gt;, -d &lt;database&gt;</code></p>
+
+<p>选择要备份的数据库</p></li>
+<li rel="12"><p><code>--collection &lt;collection&gt;, -c &lt;collection&gt;</code></p>
+
+<p>选择要备份的集合</p></li>
+<li rel="13"><p><code>--query &lt;json&gt;, -q &lt;json&gt;</code></p>
+
+<p>备份符合条件的数据</p></li>
+<li rel="14"><p><code>--queryFile &lt;path&gt;</code></p>
+
+<p>与13相同，查询条件通过文件引入</p></li>
+<li rel="15"><p><code>--gzip</code></p>
+
+<p>备份的文件进行压缩，文件名以 .gz 结尾</p></li>
+<li rel="16"><p><code>--out &lt;path&gt;, -o &lt;path&gt;</code></p>
+
+<p>备份之后文件的存放目录，默认为当前执行备份命令的目录</p></li>
+</ol>
+
+
+
+<h2 id="mongorestore">mongorestore</h2>
+
+<p>当前版本：r3.4.6</p>
+
+<blockquote>
+  <p>恢复mongodump导出的数据 <a href="https://docs.mongodb.com/manual/reference/program/mongorestore/" target="_blank">官方文档</a></p>
+</blockquote>
+
+<ol><li rel="1"><p><code>--objcheck</code></p>
+
+<p>检测要导入的数据是否符合为object</p></li>
+<li rel="2"><p><code>--oplogReplay</code>                                         replay oplog for point-in-time restore</p></li>
+<li rel="3"><p><code>--oplogLimit=&lt;seconds&gt;[:ordinal]</code>   replay oplog for point-in-time restore</p></li>
+<li rel="4"><p><code>--oplogFile=&lt;filename&gt;</code>                       oplog file to use for replay of oplog</p></li>
+<li rel="5"><p><code>--archive=&lt;filename&gt;</code>                            restore dump from the specified archive file.  If flag is specified without a value, archive is read from stdin</p></li>
+<li rel="6"><p><code>--dir=&lt;directory-name&gt;</code>                        input directory, use ‘-’ for stdin </p></li>
+<li rel="7"><p><code>--gzip</code>                                                        decompress gzipped input </p>
+
+<p>导入dump输出的.gz压缩文件</p></li>
+<li rel="8"><p><code>--drop</code>                                                         drop each collection before import</p>
+
+<p>导入数据之前，删除原有的数据库数据             </p></li>
+<li rel="9"><p><code>--noIndexRestore</code></p>
+
+<p>不保存索引</p></li>
+<li rel="10"><p><code>--noOptionsRestore</code></p>
+
+<p>不保存集合的配置</p></li>
+<li rel="11"><p><code>--keepIndexVersion</code></p>
+
+<p>保持原有所以的版本</p></li>
+<li rel="12"><p><code>--maintainInsertionOrder</code></p>
+
+<p>使插入的数据库顺序与文档的数据顺序一致</p></li>
+<li rel="13"><p><code>-j, --numParallelCollections=</code></p>
+
+<p>并行插入数据，默认为4</p></li>
+<li rel="14"><p><code>--stopOnError</code></p>
+
+<p>遇到错误停止导入</p></li>
+<li rel="15"><p><code>--bypassDocumentValidation</code></p>
+
+<p>不保存无效数据</p></li>
+<li rel="16"><p><code>--numInsertionWorkersPerCollection=</code></p>
+
+<p>number of insert operations to run concurrently per collection (1 by default) (default: 1)</p></li>
+</ol>
+
+
+
+<h2 id="mongoexport">mongoexport</h2>
+
+<p>当前版本：r3.4.6</p>
+
+<blockquote>
+  <p>官方文档</p>
+</blockquote>
+
+
+
+<h2 id="mongoimport">mongoimport</h2>
+
+<p>当前版本：r3.4.6</p>
+
+<blockquote>
+  <p>官方文档</p>
+</blockquote>
+
+
+
+<h2 id="mongofiles">mongofiles</h2>
+
+<p>当前版本：r3.4.6</p>
+
+<blockquote>
+  <p>官方文档</p>
+</blockquote>
+
+
+
+<h2 id="mongooplog">mongooplog</h2>
+
+<p>当前版本：r3.4.6</p>
+
+<blockquote>
+  <p>官方文档</p>
+</blockquote>
+
+
+
+<h2 id="mongoperf">mongoperf</h2>
+
+<p>当前版本：r3.4.6</p>
+
+<blockquote>
+  <p>官方文档</p>
+</blockquote>
+
+
+
+<h2 id="mongos">mongos</h2>
+
+<p>当前版本：r3.4.6</p>
+
+<blockquote>
+  <p>官方文档</p>
+</blockquote>
+
+
+
+<h2 id="mongostat">mongostat</h2>
+
+<p>当前版本：r3.4.6</p>
+
+<blockquote>
+  <p>官方文档</p>
+</blockquote>
+
+
+
+<h2 id="mongotop">mongotop</h2>
+
+<p>当前版本：r3.4.6</p>
+
+<blockquote>
+  <p>官方文档</p>
+</blockquote></div></body></html>
