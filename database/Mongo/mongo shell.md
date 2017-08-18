@@ -53,7 +53,7 @@ mongodb版本3.4.6
 
 10. `--password <password>, -p <password>`
 
-   对应用户名的密码
+  对应用户名的密码
 
 11. `--db <database>, -d <database>`
 
@@ -113,7 +113,7 @@ mongodb版本3.4.6
 
 10. `--noOptionsRestore`
 
-   不保存集合的配置
+  不保存集合的配置
 
 11. `--keepIndexVersion`
 
@@ -186,6 +186,8 @@ mongodb版本3.4.6
 当前版本：r3.4.6
 
 > 官方文档
+
+
 
 
 
