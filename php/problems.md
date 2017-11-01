@@ -6,7 +6,7 @@
 
 ## MAMP开启请求日志
 
-1. MAMP开启请求日志[参考](https://sites.google.com/site/mamppro/en/mamp/faq/where-can-i-find-the-logs/how-can-i-enable-the-apache-access-logs)：
+MAMP开启请求日志[参考](https://sites.google.com/site/mamppro/en/mamp/faq/where-can-i-find-the-logs/how-can-i-enable-the-apache-access-logs)：
 
    1）运行`vim /Applications/MAMP/conf/apache/httpd.conf`
 
@@ -36,6 +36,3 @@
    >
    >  MAMP日志所在位置：`/Applications/MAMP/logs`，包括Apache、Nginx、PHP、MySQL、Cloud
 
-2. ​
-
-   ​
