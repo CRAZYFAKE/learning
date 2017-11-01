@@ -104,13 +104,13 @@ Data:返回数据
 
    如果永久修改的话[参考](http://blog-en.mamp.info/2015/02/editing-your-httpdconf-file-in-mamp-pro.html)，需要点击`File->Edit Template->Apache->httpd.conf`，如下图[图](http://2.bp.blogspot.com/-QCjkNUlt0EE/VOWcf3R5t4I/AAAAAAAAAd8/J4Q9KD509N8/s1600/Screen%2BShot%2B2015-02-06%2Bat%2B08.07.06.png)：
 
-   ![操作图](./_picture/Screen Shot 2015-02-06 at 08.07.06.png)
+   ![操作图](../_picture/MAMP.png)
 
    执行上面的1）~ 3）步，然后重启MAMP，执行第5步
 
    >  **重点：**
    >
-   > MAMP日志所在位置：`/Applications/MAMP/logs`，包括Apache、Nginx、PHP、MySQL、Cloud
+   >  MAMP日志所在位置：`/Applications/MAMP/logs`，包括Apache、Nginx、PHP、MySQL、Cloud
 
 3. ​
 
