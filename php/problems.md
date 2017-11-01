@@ -24,7 +24,7 @@ MAMP开启请求日志[参考](https://sites.google.com/site/mamppro/en/mamp/faq
 
    上面这种方式，是坑爹的，
 
-   这样有一个问题，MAMP并不是加载的`/Applications/MAMP/conf/apache/httpd.conf`
+   因为这样配置会有一个问题，MAMP并不是加载的`/Applications/MAMP/conf/apache/httpd.conf`，如果重启MAMP的话，会造成日志不可用。
 
    如果永久修改的话[参考](http://blog-en.mamp.info/2015/02/editing-your-httpdconf-file-in-mamp-pro.html)，需要点击`File->Edit Template->Apache->httpd.conf`，如下图[图](http://2.bp.blogspot.com/-QCjkNUlt0EE/VOWcf3R5t4I/AAAAAAAAAd8/J4Q9KD509N8/s1600/Screen%2BShot%2B2015-02-06%2Bat%2B08.07.06.png)：
 
