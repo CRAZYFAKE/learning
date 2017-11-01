@@ -50,9 +50,25 @@ JavaScript Object Notation 数据交换格式，可在不同平台之间进行�
 
 2. 生成数据方面：
 
-   json：json_encode()函数，传入数组。
+   **json：**json_encode()函数，传入数组。
 
-   xml：手动拼装字符串、DomDocument、XMLWriter、SimpleXML
+   传入浮点数的时候，会有精确度问题，
+
+   > http://www.php.net/manual/en/function.json-encode.php
+   >
+   > The encoding is affected by the supplied `options` and additionally the encoding of float values depends on the value of [serialize_precision](http://php.net/manual/en/ini.core.php#ini.serialize-precision).
+
+   > http://php.net/manual/en/ini.core.php#ini.serialize-precision
+   >
+   > https://php.golaravel.com/ini.core.html#ini.serialize-precision
+   >
+   > ​
+   >
+   > The number of significant digits stored while serializing floating point numbers. -1 means that an enhanced algorithm for rounding such numbers will be used.
+
+   意思是序列化浮点数的精度，需要在`php.ini`文件设置`serialize_precision`属性。
+
+   **xml：**手动拼装字符串、DomDocument、XMLWriter、SimpleXML
 
 3. 传输速度：
 
