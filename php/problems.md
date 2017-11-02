@@ -36,3 +36,22 @@ MAMP开启请求日志[参考](https://sites.google.com/site/mamppro/en/mamp/faq
    >
    >  MAMP日志所在位置：`/Applications/MAMP/logs`，包括Apache、Nginx、PHP、MySQL、Cloud
 
+### Navicat连接MAMP连接的MySQL
+
+首先下载Navicat
+
+查看MAMP连接的MySQL所占端口
+
+并修改MAMP的MySQL配置，点击`Allow network access to MySQL`，选择`only from this Mac`
+
+然后配置Navicat连接即可
+
+### PHP 7.1无法使用dd()函数
+
+原因：https://stackoverflow.com/questions/40057476/php-laravel-a-non-well-formed-numeric-value-encountered-on-string
+
+> This is a bug in the symfony/var-dumper package when using PHP7.1. It was fixed in version 2.7.16, 2.8.9, 3.0.9 and 3.1.3. See the pull request: [https://github.com/symfony/symfony/pull/19379](https://github.com/symfony/symfony/pull/19379)
+>
+> In my case, I needed to `composer update` my laravel framework packages, as my vendor directory copy of that package was at 2.7.9. (I'm using Laravel 5.1; later versions use 2.8 and 3.0 of symfony, which also had the bug)
+>
+> 项目下执行composer update，或者只更新symfony/var-dumper的版本到` 2.7.16, 2.8.9, 3.0.9 and 3.1.3`就行
