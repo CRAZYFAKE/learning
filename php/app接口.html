@@ -899,18 +899,18 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 <p>最常用的 200 表示成功，500 表示Server内部错误</p></li>
 </ul>
 
-<p>最主要的是解放思想，Web端不再用之前典型的PHP或JSP架构，而是改为前段渲染和附带处理简单的商务逻辑。Web端和Server只使用上述定义的API来传递数据和改变数据状态。格式一般是JSON/XML。iOS和Android可相同。由此可见，Web，iOS，Android和第三方开发者变为平等的角色通过一套API来共同消费Server提供的服务。</p>
+<p>最主要的是解放思想，Web端不再用之前典型的PHP或JSP架构，而是改为前段渲染和附带处理简单的商务逻辑。<br/>
+Web端和Server只使用上述定义的API来传递数据和改变数据状态。格式一般是JSON/XML。iOS和Android也相同。由此可见，Web，iOS，Android和第三方开发者变为平等的角色通过一套API来共同消费Server提供的服务。</p>
 </blockquote>
 
 <h3 id="toc_2">与app如何通信</h3>
 
-<p>client端（APP、前端） =&gt; server端 ===&gt;（返回数据，json/xml）client端</p>
-
-<p>RESTful api</p>
+<p>client端（APP、前端） =&gt; server端 ===&gt;（返回数据，json/xml）client端<br/>
+<img src="https://raw.githubusercontent.com/CRAZYFAKE/learning/master/_picture/%E6%8E%A5%E5%8F%A3%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE.png" alt="接口返回数据"/></p>
 
 <p><strong>xml</strong></p>
 
-<p>Extensible Markup Language，扩展标记语言，用来标记数据、定义数据类型，允许用户对自己的标记语言进行定义的源语言。意思是：xml的节点可以自定义的。xml格式统一，跨语言和平台。</p>
+<p>Extensible Markup Language，扩展标记语言，用来标记数据、定义数据类型，允许用户对自己的标记语言进行定义的源语言。意思是：xml的节点可以自定义的。xml格式统一，跨语言和平台。xml 被设计为传输和存储数据，其焦点是数据的内容。</p>
 
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;item&gt;
@@ -934,13 +934,13 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 }
 </code></pre>
 
-<p>区别：</p>
+<p><strong>区别：</strong></p>
 
 <ol>
-<li><p>可读性：xml数据方面</p></li>
+<li><p>可读性：xml文件格式复杂，json相对简单</p></li>
 <li><p>生成数据方面：</p>
 
-<p><strong>json：</strong> json_encode()函数，传入数组。</p>
+<p><strong>json：</strong> json_encode()函数，传入数组。编码格式必须是<code>UTF-8</code>的，其他编码会分返回<code>NULL</code>或<code>false</code></p>
 
 <p>传入浮点数的时候，会有精确度问题，官方文档：</p>
 
@@ -960,10 +960,62 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 
 <p>意思是序列化浮点数的精度，需要在<code>php.ini</code>文件设置<code>serialize_precision</code>属性，如果设置成<code>-1</code>的话，意味着将使用加强版的四舍五入算法。这样的设置的话，<code>json_encode</code>的精度问题就解决。</p>
 
-<p><strong>xml：</strong> 手动拼装字符串、DomDocument、XMLWriter、SimpleXML</p></li>
+<p><strong>xml：</strong> DomDocument、XMLWriter、SimpleXML、手动拼装字符串：</p>
+
+<pre><code class="language-php">&lt;?php
+
+class Response {
+/**
+ * 返回xml格式数据
+ * @param $result array 返回数据
+ * return xml
+ */
+public static function xmlEncode($result) {
+    /**
+     * 修改响应头信息之后可以查看每个节点
+     * 默认是：Content-Type:text/html; charset=UTF-8
+     * 修改为：Content-Type:text/xml
+     */
+    // header(&#39;Content-Type:text/xml&#39;);
+    $xml = &quot;&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;\n&quot;;
+    $xml .= &quot;&lt;root&gt;\n&quot;;
+    $xml .= self::data2XML($result);
+    $xml .= &quot;&lt;/root&gt;\n&quot;;
+    echo $xml;
+    exit;
+}
+
+public static function data2XML($data) {
+    $xml = $attr = &quot;&quot;;
+    foreach ($data as $key =&gt; $value) {
+        //if (is_numeric($key)) {
+        //  $attr = &quot; id=&#39;{$key}&#39;&quot;;
+        //  $key  = &quot;item&quot;;
+        //}
+        $xml .= &quot;&lt;{$key}{$attr}&gt;&quot;;
+        // 递归遍历多维数组
+        $xml .= is_array($value) ? self::data2XML($value) : $value;
+        $xml .= &quot;&lt;/{$key}&gt;\n&quot;;
+    }
+    return $xml;
+}
+}
+
+Response::xmlEncode(array(
+&#39;code&#39;    =&gt; 200,
+&#39;messgae&#39; =&gt; &#39;success&#39;,
+&#39;data&#39;    =&gt; array(
+    &#39;id&#39;      =&gt; 1001,
+    &#39;name&#39;    =&gt; &#39;YYX&#39;,
+    &#39;address&#39; =&gt; &#39;河北&#39;,
+    &#39;arrayA&#39;  =&gt; array()
+)
+));
+</code></pre></li>
 <li><p>传输速度：</p>
 
-<p>json数据量相对要小</p></li>
+<p>xml文件庞大，传输占用带宽，服务器端和客户端都需要花费大量代码来解析XML<br/>
+json数据格式简单，易于读写，占用带宽小</p></li>
 </ol>
 
 <h3 id="toc_3">接口要做什么</h3>
@@ -980,13 +1032,58 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 
 <p>通信数据标准格式：</p>
 
-<p>Code: 状态码</p>
+<p>code: 状态码</p>
 
-<p>Message:提示信息，格式不正确，数据返回成功等</p>
+<p>message:提示信息，格式不正确，数据返回成功等</p>
 
-<p>Data:返回数据</p>
+<p>data:返回数据</p>
 
-<p>​</p>
+<p><strong>封装json</strong></p>
+
+<pre><code class="language-php">public static function jsonEncode($result) {
+    /**
+     * 修改响应头信息之后可以查看每个节点
+     * 默认是：Content-Type:text/html; charset=UTF-8
+     * 修改为：Content-Type:application/json
+     */
+    // header(&#39;Content-Type:application/json&#39;);
+    echo json_encode($result);
+    exit;
+}
+</code></pre>
+
+<p><strong>封装xml</strong></p>
+
+<p>用上面的方法</p>
+
+<p><strong>总封装</strong></p>
+
+<pre><code class="language-php">public static function show($code, $message = &quot;&quot;, $data = array()) {
+    if (!is_numeric($code)) {
+        return &#39;&#39;;
+    }
+
+    $type = isset($_GET[&#39;format&#39;]) ? $_GET[&#39;format&#39;] : self::JSON;
+
+    $result = array(
+        &#39;code&#39;    =&gt; $code,
+        &#39;message&#39; =&gt; $message,
+        &#39;data&#39;    =&gt; $data
+    );
+
+    switch ($type) {
+        case self::JSON:
+            self::jsonEncode($result);
+            break;
+        case self::XML:
+            self::xmlEncode($result);
+            break;
+        default:
+            self::jsonEncode($result);
+            break;
+    }
+}
+</code></pre>
 
 </div></body>
 
