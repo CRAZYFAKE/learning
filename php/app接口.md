@@ -38,7 +38,7 @@ client端（APP、前端） => server端 ===>（返回数据，json/xml）client
 
 **xml**
 
-Extensible Markup Language，扩展标记语言，用来标记数据、定义数据类型，允许用户对自己的标记语言进行定义的源语言。意思是：xml的节点可以自定义的。xml格式统一，跨语言和平台。
+Extensible Markup Language，扩展标记语言，用来标记数据、定义数据类型，允许用户对自己的标记语言进行定义的源语言。意思是：xml的节点可以自定义的。xml格式统一，跨语言和平台。xml 被设计为传输和存储数据，其焦点是数据的内容。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -64,13 +64,13 @@ JavaScript Object Notation 数据交换格式，可在不同平台之间进行�
 }
 ```
 
-区别：
+**区别：**
 
-1. 可读性：xml数据方面
+1. 可读性：xml文件格式复杂，json相对简单
 
 2. 生成数据方面：
 
-   **json：** json_encode()函数，传入数组。
+   **json：** json_encode()函数，传入数组。编码格式必须是`UTF-8`的，其他编码会分返回`NULL`或`false`
 
    传入浮点数的时候，会有精确度问题，官方文档：
 
@@ -86,11 +86,66 @@ JavaScript Object Notation 数据交换格式，可在不同平台之间进行�
 
    意思是序列化浮点数的精度，需要在`php.ini`文件设置`serialize_precision`属性，如果设置成`-1`的话，意味着将使用加强版的四舍五入算法。这样的设置的话，`json_encode`的精度问题就解决。
 
-   **xml：** 手动拼装字符串、DomDocument、XMLWriter、SimpleXML
+   **xml：** DomDocument、XMLWriter、SimpleXML、手动拼装字符串：
+
+   ```php
+   <?php
+
+   class Response {
+   	/**
+   	 * 返回xml格式数据
+   	 * @param $result array 返回数据
+   	 * return xml
+   	 */
+   	public static function xmlEncode($result) {
+   		/**
+   		 * 修改响应头信息之后可以查看每个节点
+   		 * 默认是：Content-Type:text/html; charset=UTF-8
+   		 * 修改为：Content-Type:text/xml
+   		 */
+   		// header('Content-Type:text/xml');
+   		$xml = "<?xml version='1.0' encoding='UTF-8'?>\n";
+   		$xml .= "<root>\n";
+   		$xml .= self::data2XML($result);
+   		$xml .= "</root>\n";
+   		echo $xml;
+   		exit;
+   	}
+
+   	public static function data2XML($data) {
+   		$xml = $attr = "";
+   		foreach ($data as $key => $value) {
+   			//if (is_numeric($key)) {
+   			//	$attr = " id='{$key}'";
+   			//	$key  = "item";
+   			//}
+   			$xml .= "<{$key}{$attr}>";
+   			// 递归遍历多维数组
+   			$xml .= is_array($value) ? self::data2XML($value) : $value;
+   			$xml .= "</{$key}>\n";
+   		}
+   		return $xml;
+   	}
+   }
+
+   Response::xmlEncode(array(
+   	'code'    => 200,
+   	'messgae' => 'success',
+   	'data'    => array(
+   		'id'      => 1001,
+   		'name'    => 'YYX',
+   		'address' => '河北',
+   		'arrayA'  => array()
+   	)
+   ));
+   ```
+
+
 
 3. 传输速度：
 
-   json数据量相对要小
+    xml文件庞大，传输占用带宽，服务器端和客户端都需要花费大量代码来解析XML
+    json数据格式简单，易于读写，占用带宽小
 
 ### 接口要做什么
 
@@ -106,15 +161,66 @@ JavaScript Object Notation 数据交换格式，可在不同平台之间进行�
 
 通信数据标准格式：
 
-Code: 状态码
+code: 状态码
 
-Message:提示信息，格式不正确，数据返回成功等
+message:提示信息，格式不正确，数据返回成功等
 
-Data:返回数据
+data:返回数据
+
+**封装json**
+
+```php
+public static function jsonEncode($result) {
+	/**
+	 * 修改响应头信息之后可以查看每个节点
+	 * 默认是：Content-Type:text/html; charset=UTF-8
+	 * 修改为：Content-Type:application/json
+	 */
+	// header('Content-Type:application/json');
+	echo json_encode($result);
+	exit;
+}
+```
+
+**封装xml**
+
+用上面的方法
+
+**总封装**
+
+```php
+public static function show($code, $message = "", $data = array()) {
+	if (!is_numeric($code)) {
+		return '';
+	}
+
+	$type = isset($_GET['format']) ? $_GET['format'] : self::JSON;
+
+	$result = array(
+		'code'    => $code,
+		'message' => $message,
+		'data'    => $data
+	);
+
+	switch ($type) {
+		case self::JSON:
+			self::jsonEncode($result);
+			break;
+		case self::XML:
+			self::xmlEncode($result);
+			break;
+		default:
+			self::jsonEncode($result);
+			break;
+	}
+}
+```
 
 
 
 
 
-​
+
+
+
 
