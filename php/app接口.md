@@ -28,13 +28,13 @@
 >
 >   最常用的 200 表示成功，500 表示Server内部错误
 >
-> 最主要的是解放思想，Web端不再用之前典型的PHP或JSP架构，而是改为前段渲染和附带处理简单的商务逻辑。Web端和Server只使用上述定义的API来传递数据和改变数据状态。格式一般是JSON/XML。iOS和Android可相同。由此可见，Web，iOS，Android和第三方开发者变为平等的角色通过一套API来共同消费Server提供的服务。
+> 最主要的是解放思想，Web端不再用之前典型的PHP或JSP架构，而是改为前段渲染和附带处理简单的商务逻辑。
+> Web端和Server只使用上述定义的API来传递数据和改变数据状态。格式一般是JSON/XML。iOS和Android也相同。由此可见，Web，iOS，Android和第三方开发者变为平等的角色通过一套API来共同消费Server提供的服务。
 
 ### 与app如何通信
 
 client端（APP、前端） => server端 ===>（返回数据，json/xml）client端
-
-RESTful api
+![接口返回数据](../_picture/接口返回数据.png)
 
 **xml**
 
