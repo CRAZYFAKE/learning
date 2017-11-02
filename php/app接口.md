@@ -92,51 +92,51 @@ JavaScript Object Notation 数据交换格式，可在不同平台之间进行�
    <?php
 
    class Response {
-   	/**
-   	 * 返回xml格式数据
-   	 * @param $result array 返回数据
-   	 * return xml
-   	 */
-   	public static function xmlEncode($result) {
-   		/**
-   		 * 修改响应头信息之后可以查看每个节点
-   		 * 默认是：Content-Type:text/html; charset=UTF-8
-   		 * 修改为：Content-Type:text/xml
-   		 */
-   		// header('Content-Type:text/xml');
-   		$xml = "<?xml version='1.0' encoding='UTF-8'?>\n";
-   		$xml .= "<root>\n";
-   		$xml .= self::data2XML($result);
-   		$xml .= "</root>\n";
-   		echo $xml;
-   		exit;
-   	}
-
-   	public static function data2XML($data) {
-   		$xml = $attr = "";
-   		foreach ($data as $key => $value) {
-   			//if (is_numeric($key)) {
-   			//	$attr = " id='{$key}'";
-   			//	$key  = "item";
-   			//}
-   			$xml .= "<{$key}{$attr}>";
-   			// 递归遍历多维数组
-   			$xml .= is_array($value) ? self::data2XML($value) : $value;
-   			$xml .= "</{$key}>\n";
-   		}
-   		return $xml;
-   	}
+       	 /**
+       	 * 返回xml格式数据
+       	 * @param $result array 返回数据
+       	 * return xml
+       	 */
+       	public static function xmlEncode($result) {
+       		/**
+       		 * 修改响应头信息之后可以查看每个节点
+       		 * 默认是：Content-Type:text/html; charset=UTF-8
+       		 * 修改为：Content-Type:text/xml
+       		 */
+       		// header('Content-Type:text/xml');
+       		$xml = "<?xml version='1.0' encoding='UTF-8'?>\n";
+       		$xml .= "<root>\n";
+       		$xml .= self::data2XML($result);
+       		$xml .= "</root>\n";
+       		echo $xml;
+       		exit;
+       	}
+    
+       	public static function data2XML($data) {
+       		$xml = $attr = "";
+       		foreach ($data as $key => $value) {
+       			//if (is_numeric($key)) {
+       			//	$attr = " id='{$key}'";
+       			//	$key  = "item";
+       			//}
+       			$xml .= "<{$key}{$attr}>";
+       			// 递归遍历多维数组
+       			$xml .= is_array($value) ? self::data2XML($value) : $value;
+       			$xml .= "</{$key}>\n";
+       		}
+       		return $xml;
+       	}
    }
 
    Response::xmlEncode(array(
-   	'code'    => 200,
-   	'messgae' => 'success',
-   	'data'    => array(
-   		'id'      => 1001,
-   		'name'    => 'YYX',
-   		'address' => '河北',
-   		'arrayA'  => array()
-   	)
+        'code'    => 200,
+        'messgae' => 'success',
+        'data'    => array(
+        	'id'      => 1001,
+        	'name'    => 'YYX',
+        	'address' => '河北',
+        	'arrayA'  => array()
+        )
    ));
    ```
 
