@@ -34,7 +34,7 @@
 ### 与app如何通信
 
 client端（APP、前端） => server端 ===>（返回数据，json/xml）client端
-![接口返回数据](../_picture/接口返回数据.png)
+![接口返回数据](https://raw.githubusercontent.com/CRAZYFAKE/learning/master/_picture/%E6%8E%A5%E5%8F%A3%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE.png)
 
 **xml**
 
