@@ -8,7 +8,27 @@
 
 2.文件：处理接口逻辑
 
-3.数据：返回给前端的数据，json/xml
+3.数据：返回给客户端的数据，json/xml
+
+> 风格：**RESTfull API**，目前一种比较成熟的api设计理念，也可以叫一种规范
+>
+> - 每一个URI代表一种资源
+>
+>   它可以是一段文本、一张图片、一首歌曲、一种服务，因为"资源"表示一种实体，所以应该是名词，URI不应该有动词，动词应该放在HTTP方法中
+>
+> - 使用HTTP方法，对服务器的资源进行操作
+>
+>   HTTP GET/PUT/POST/DELETE
+>
+> - 服务器与客户端之间传递某资源的一个表现形式
+>
+>   JSON，XML传输文本，或者用JPG，WebP传输图片等
+>
+> - 用[HTTP Status Code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)传递Server的状态信息
+>
+>   最常用的 200 表示成功，500 表示Server内部错误
+>
+> > 最主要的是解放思想，Web端不再用之前典型的PHP或JSP架构，而是改为前段渲染和附带处理简单的商务逻辑。Web端和Server只使用上述定义的API来传递数据和改变数据状态。格式一般是JSON/XML。iOS和Android可相同。由此可见，Web，iOS，Android和第三方开发者变为平等的角色通过一套API来共同消费Server提供的服务。
 
 ### 与app如何通信
 
