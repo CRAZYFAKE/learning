@@ -4,11 +4,11 @@
 
 ### app接口定义：
 
-1.地址：
+1.地址：URL
 
-2.文件：（处理一些业务逻辑）
+2.文件：处理接口逻辑
 
-3.接口数据：
+3.数据：返回给前端的数据，json/xml
 
 ### 与app如何通信
 
@@ -50,7 +50,7 @@ JavaScript Object Notation 数据交换格式，可在不同平台之间进行�
 
 2. 生成数据方面：
 
-   **json：**json_encode()函数，传入数组。
+   **json：** json_encode()函数，传入数组。
 
    传入浮点数的时候，会有精确度问题，官方文档：
 
@@ -66,7 +66,7 @@ JavaScript Object Notation 数据交换格式，可在不同平台之间进行�
 
    意思是序列化浮点数的精度，需要在`php.ini`文件设置`serialize_precision`属性，如果设置成`-1`的话，意味着将使用加强版的四舍五入算法。这样的设置的话，`json_encode`的精度问题就解决。
 
-   **xml：**手动拼装字符串、DomDocument、XMLWriter、SimpleXML
+   **xml：** 手动拼装字符串、DomDocument、XMLWriter、SimpleXML
 
 3. 传输速度：
 
