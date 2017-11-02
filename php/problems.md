@@ -36,7 +36,7 @@ MAMP开启请求日志[参考](https://sites.google.com/site/mamppro/en/mamp/faq
    >
    >  MAMP日志所在位置：`/Applications/MAMP/logs`，包括Apache、Nginx、PHP、MySQL、Cloud
 
-### Navicat连接MAMP连接的MySQL
+## Navicat连接MAMP连接的MySQL
 
 首先下载Navicat
 
@@ -46,7 +46,7 @@ MAMP开启请求日志[参考](https://sites.google.com/site/mamppro/en/mamp/faq
 
 然后配置Navicat连接即可
 
-### PHP 7.1无法使用dd()函数
+## PHP 7.1无法使用dd()函数
 
 原因：https://stackoverflow.com/questions/40057476/php-laravel-a-non-well-formed-numeric-value-encountered-on-string
 

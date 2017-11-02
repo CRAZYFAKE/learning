@@ -19,7 +19,7 @@ tests 单元测试
 1. 创建模型和迁移文件
 
    ```
-   php artisan make:model Article -m
+   php artisan make:model Http/Models/Article -m
    ```
 
 
@@ -33,8 +33,8 @@ tests 单元测试
    ```
                                                                                            
      [PDOException]                                                                        
-     SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'jobs' already exists  
-
+     SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'jobs' already exists 
+     
    ```
 
    如果没有表需要迁移的话，会打印以下信息：
