@@ -42,6 +42,13 @@ tests 单元测试
    ```
    Nothing to migrate.
    ```
+   迁移回滚：
+
+   ```
+   php artisan migrate:rollback
+   ```
+
+   ​
 
 3. 数据填充
 
