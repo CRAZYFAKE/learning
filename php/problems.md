@@ -4,9 +4,9 @@
 
 修改`php.ini`文件的`expose_php=Off`
 
-## MAMP开启请求日志
+## MAMP开启Apache请求日志
 
-MAMP开启请求日志[参考](https://sites.google.com/site/mamppro/en/mamp/faq/where-can-i-find-the-logs/how-can-i-enable-the-apache-access-logs)：
+MAMP开启Apache请求日志[参考](https://sites.google.com/site/mamppro/en/mamp/faq/where-can-i-find-the-logs/how-can-i-enable-the-apache-access-logs)：
 
    1）运行`vim /Applications/MAMP/conf/apache/httpd.conf`
 
@@ -19,7 +19,7 @@ MAMP开启请求日志[参考](https://sites.google.com/site/mamppro/en/mamp/faq
    5）运行命令`tail -f /Applications/MAMP/logs/apache_access.log`，查看Apache请求日志，如下：
 
    ```
-   ::1 - - [04/Jun/2010:10:32:20 -0700] "GET /favicon.ico HTTP/1.1" 200 1406 "-" "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 GTB7.0"
+::1 - - [04/Jun/2010:10:32:20 -0700] "GET /favicon.ico HTTP/1.1" 200 1406 "-" "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 GTB7.0"
    ```
 
    上面这种方式，是坑爹的，
