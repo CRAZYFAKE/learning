@@ -55,3 +55,28 @@ MAMP开启Apache请求日志[参考](https://sites.google.com/site/mamppro/en/ma
 > In my case, I needed to `composer update` my laravel framework packages, as my vendor directory copy of that package was at 2.7.9. (I'm using Laravel 5.1; later versions use 2.8 and 3.0 of symfony, which also had the bug)
 >
 > 项目下执行composer update，或者只更新symfony/var-dumper的版本到` 2.7.16, 2.8.9, 3.0.9 and 3.1.3`就行
+
+## 启动MySQL时，报错：
+
+错误信息：
+
+```shell
+2017-11-04 10:40:16 5081 [ERROR] Can't start server : Bind on unix socket: Address already in use
+2017-11-04 10:40:16 5081 [ERROR] Do you already have another mysqld server running on socket: /Applications/MAMP/tmp/mysql/mysql.sock ?
+2017-11-04 10:40:16 5081 [ERROR] Aborting
+```
+
+根据上面提示的意思是：`/Applications/MAMP/tmp/mysql/mysql.sock`被占用了
+
+用`ps -ef|grep mysql`检查没有其它MySQL进程
+
+用`netstat -an|grep 8889`检查端口也不存在。
+
+对比正常关闭MySQL时分析，MySQL关闭后`/Applications/MAMP/tmp/mysql/mysql.sock`文件就会被删除，而现在依然存在，猜测上次关闭MySQL时出现了异常，或未正常关闭导致。
+
+**解决办法：**
+
+删除`/Applications/MAMP/tmp/mysql/mysql.sock`文件夹，重启MySQL
+
+
+
