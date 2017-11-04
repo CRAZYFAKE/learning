@@ -1,4 +1,10 @@
-Laravel目录介绍
+[TOC]
+
+
+
+
+
+## Laravel目录介绍
 
 app 核心代码
  Http 代码
@@ -14,23 +20,23 @@ resources 视图，原始资源文件
 
 tests 单元测试
 
-### php artisan的使用
+## php artisan的使用
 
 1. 创建模型和迁移文件
 
-   ```
+   ```shell
    php artisan make:model Http/Models/Article -m
    ```
 
 
 2. 执行数据库迁移文件
 
-   ```
+   ```shell
    php artisan migrate
    ```
    执行上面命令的时候，查询一张名字叫做`migrations`的记录表，如果表儿名已经存在该数据库，则不会新建表，如果不存在，则新建。如果重复创建的话，会报错：
 
-   ```
+   ```shell
                                                                                            
      [PDOException]                                                                        
      SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'jobs' already exists 
@@ -39,20 +45,18 @@ tests 单元测试
 
    如果没有表需要迁移的话，会打印以下信息：
 
-   ```
+   ```shell
    Nothing to migrate.
    ```
    迁移回滚：
 
-   ```
+   ```shell
    php artisan migrate:rollback
    ```
 
-   ​
-
 3. 数据填充
 
-   ```
+   ```Shell
    #创建填充文件
    php artisan make:seeder ArticleTableSeeder
    #执行单个填充文件
@@ -61,15 +65,274 @@ tests 单元测试
    php artisan db:seed
    ```
 
+4. 单元测试
+
+   ```shell
+   #创建单元测试
+   php artisan make:test UserTest 
+   ```
+
    ​
 
-4. 1
+   ​
 
-5. 1
+   ​
 
-6. 1
 
-7. 1
+## 单元测试
 
-8. 1
+### 安装phpunit
 
+#### linux下安装
+
+1. 下载脚本
+
+   ```shell
+   wget https://phar.phpunit.de/phpunit.phar
+   ```
+
+   > [phpunit](https://phar.phpunit.de)里有全部版本的phpunit
+
+2. 添加执行权限
+
+   ```shell
+   chmod +x phpunit.phar
+   ```
+
+3. 全局安装
+
+   ```shell
+   mv phpunit.phar /usr/local/bin/phpunit
+   ```
+
+4. 查看phpunit版本（确认phpunit是否安装成功）
+
+   ```shell
+   phpunit --version
+   ```
+
+   mac自带PHP版本太低会有提示：
+
+   ```shell
+   PHPUnit 6.4.3 by Sebastian Bergmann and contributors.
+
+   This version of PHPUnit is supported on PHP 7.0 and PHP 7.1.
+   You are using PHP 5.6.30 (/usr/bin/php).
+   ```
+
+   > **需要更新PHP版本**
+
+#### windows下安装
+
+window下安装phpunit需要先安装pear，安装过程如下：
+
+1. 下载go-pear.phar。链接：http://pear.php.net/go-pear.phar
+
+2. 将go-pear.phar移到php目录，运行
+
+   ```shell
+   php go-pear.phar
+   ```
+
+注：安装过程中可以根据提示，选择全局安装还是局部安装，设置目录。最后会提示需要修改php.ini，点击确定即可。最后，运行pear，显示用法，即表示安装成功。如需要升级，可以执行```pear upgrade-all```。
+
+#### PHPUnit版本
+
+1. PHPUnit 6.4 是目前的 **稳定** 版本[公告](https://github.com/sebastianbergmann/phpunit/wiki/Release-Announcement-for-PHPUnit-6.4.0)
+
+   它 *稳定* 于 2017年10月06日，PHPUnit 6于2019年02月08日结束支持。
+
+   PHPUnit 6.4 支持 PHP 7.0, 和 PHP 7.1.
+
+
+2. PHPUnit 5.7 是之前旧的 **稳定** 版本[公告](https://github.com/sebastianbergmann/phpunit/wiki/Release-Announcement-for-PHPUnit-5.7.0)
+
+   它 *稳定* 于 2016年12月02日。
+
+   PHPUnit 5.7 支持于 PHP 5.6, PHP 7.0 和 PHP 7.1， PHPUnit 5 将于2018年02月02日结束维护支持。
+
+> **由于mac自带php5.6，而且升级比较麻烦，下面的例子以PHPunit5.7版本为例**
+
+### 写测试代码
+
+执行下面命令：
+
+```shell
+php artisan make:test UserTest 
+```
+
+会在`tests`目录下生成一个`UserTest.php`文件，我们测试代码写到里面就好，下面`/hello`路由，会返回json如下
+
+```json
+{
+  id: 1,
+  name: "yyx"
+}
+```
+
+测试代码：
+
+```php
+class UserTest extends TestCase {
+	/**
+	 * 测试post方法，返回json
+	 * A basic test example.
+	 *
+	 * @return void
+	 */
+	public function testExample() {
+		$this->get('/hello', [])
+			->seeJson([
+				'id'   => 1,
+				'name' => 'yyx'
+			]);
+    }
+}
+```
+
+粗略验证json使用方法`seeJson`，精确验证json使用方法`seeJsonEquals`。
+
+如果你想要在应用中生成自定义HTTP请求并获取完整的`Illuminate\Http\Response`对象，可以使用`call`方法：
+
+```php
+public function testApplication(){
+    $response = $this->call('GET', '/');
+    $this->assertEquals(200, $response->status());
+}
+```
+
+**处理数据库**
+
+你可以使用帮助函数`seeInDatabase`来断言数据库中的数据是否和给定数据集合匹配。
+
+```php
+public function testDatabase(){
+    // 调用应用...
+    $this->seeInDatabase('users', ['email' => 'sally@foo.com']);
+}
+```
+
+还可以使用所有PHPUnit内置的断言函数来补充测试。
+
+一种方式是每次测试后回滚数据库并在下次测试前重新迁移。Lumen提供了一个简单的`DatabaseMigrations` trait来自动为你处理。
+
+```php
+<?php
+
+use Laravel\Lumen\Testing\DatabaseMigrations;
+use Laravel\Lumen\Testing\DatabaseTransactions;
+
+class ExampleTest extends TestCase{
+    use DatabaseMigrations;
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testBasicExample()
+    {
+        $this->get('/foo');
+    }
+}
+```
+
+另一种方式是将每一个测试用例包裹到一个数据库事务中，Lumen提供了方便的 `DatabaseTransactions` trait自动为你处理：
+
+```php
+<?php
+
+use Laravel\Lumen\Testing\DatabaseMigrations;
+use Laravel\Lumen\Testing\DatabaseTransactions;
+
+class ExampleTest extends TestCase{
+    use DatabaseTransactions;
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testBasicExample()
+    {
+        $this->get('/foo');
+    }
+}
+```
+
+测试时，通常需要在执行**测试前插入新数据到数据库**，在创建测试数据时，Lumen允许你使用“factories”为每个[Eloquent模型](http://laravelacademy.org/post/6184.html)定义默认的属性值集合，而不用手动为每一列指定值。
+
+我们看一下`atabase/factories/ModelFactory.php`文件，该文件包含了一个工厂定义：
+
+```php
+$factory->define(App\User::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'email' => $faker->email,
+        'password' => bcrypt(str_random(10)),
+        'remember_token' => str_random(10),
+    ];
+});
+```
+
+**测试中使用工厂**
+
+定义好工厂后，可以在测试或数据库填充文件中通过全局的`factory`方法使用它们来生成模型实例。
+
+```php
+public function testDatabase(){
+    $user = factory(App\User::class)->make();
+    // 用户模型测试...
+}
+```
+
+如果你想要覆盖模型的一些默认值，可以传递数组值到`make`方法。只有指定值被替换，其他数据保持不变：
+
+```php
+$user = factory(App\User::class)->make([
+    'name' => 'Abigail',
+]);
+```
+
+**持久化工厂模型**
+
+`create`方法不仅能创建模型实例，还可以使用Eloquent的`save`方法将它们保存到数据库：
+
+```php
+public function testDatabase(){
+    $user = factory(App\User::class)->create();
+    //用户模型测试...
+}
+```
+
+你仍然可以通过传递数组到create方法覆盖模型上的属性：
+
+```php
+$user = factory(App\User::class)->create([
+    'name' => 'Abigail',
+]);
+```
+
+**添加关联关系到模型**
+
+你甚至可以持久化多个模型到数据库。在本例中，我们添加一个关联到创建的模型，使用`create`方法创建多个模型的时候，会返回一个[Eloquent集合](http://laravelacademy.org/post/6201.html)实例，从而允许你使用集合提供的所有便利方法，例如`each`：
+
+```php
+$users = factory(App\User::class)
+           ->create()
+           ->each(function($u) {
+                $u->posts()->save(factory(App\Post::class)->make());
+            });
+```
+
+**模拟事件**
+
+暂时没用到
+
+### 执行测试
+
+在前面配置好所有的东西即可，在项目根目录下执行
+
+```shell
+phpuint
+```
