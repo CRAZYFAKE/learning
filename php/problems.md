@@ -56,7 +56,7 @@ MAMP开启Apache请求日志[参考](https://sites.google.com/site/mamppro/en/ma
 >
 > 项目下执行composer update，或者只更新symfony/var-dumper的版本到` 2.7.16, 2.8.9, 3.0.9 and 3.1.3`就行
 
-## 启动MySQL时，报错：
+## 启动MySQL时，报错：Bind on unix socket: Address already in use
 
 错误信息：
 
@@ -78,5 +78,59 @@ MAMP开启Apache请求日志[参考](https://sites.google.com/site/mamppro/en/ma
 
 删除`/Applications/MAMP/tmp/mysql/mysql.sock`文件夹，重启MySQL
 
+## 启动MySQL时，报错：InnoDB: Unable to lock ./ibdata1
 
+错误信息：
+
+```shell
+2017-11-06 18:29:28 53754 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 35
+2017-11-06 18:29:28 53754 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+```
+
+
+
+## 启动MySQL时，报错：InnoDB: Attempted to open a previously opened tablespace. Previous tablespace laravel/migrations uses space ID: 2
+
+错误信息：
+
+```shell
+2017-11-06 18:35:27 55599 [ERROR] InnoDB: Attempted to open a previously opened tablespace. Previous tablespace laravel/migrations uses space ID: 2 at filepath: ./laravel/migrations.ibd. Cannot open tablespace mysql/innodb_index_stats which uses space ID: 2 at filepath: ./mysql/innodb_index_stats.ibd
+2017-11-06 18:35:27 7fffab2953c0  InnoDB: Operating system error number 2 in a file operation.
+InnoDB: The error means the system cannot find the path specified.
+InnoDB: If you are installing InnoDB, remember that you must create
+InnoDB: directories yourself, InnoDB does not create them.
+InnoDB: Error: could not open single-table tablespace file ./mysql/innodb_index_stats.ibd
+InnoDB: We do not continue the crash recovery, because the table may become
+InnoDB: corrupt if we cannot apply the log records in the InnoDB log to it.
+InnoDB: To fix the problem and start mysqld:
+InnoDB: 1) If there is a permission problem in the file and mysqld cannot
+InnoDB: open the file, you should modify the permissions.
+InnoDB: 2) If the table is not needed, or you can restore it from a backup,
+InnoDB: then you can remove the .ibd file, and InnoDB will do a normal
+InnoDB: crash recovery and ignore that table.
+InnoDB: 3) If the file system or the disk is broken, and you cannot remove
+InnoDB: the .ibd file, you can set innodb_force_recovery > 0 in my.cnf
+InnoDB: and force InnoDB to continue crash recovery here.
+```
+
+1.在my.cnf中添加如下参数
+
+在[mysqld]组中加入：
+
+innodb_force_recovery=6
+
+innodb_force_recovery参数解释：
+
+innodb_force_recovery影响整个InnoDB存储引擎的恢复状况，默认值为0，表示当需要恢复时执行所有的恢复操作。
+
+当不能进行有效的恢复操作时，mysql有可能无法启动，并记录下错误日志。
+
+innodb_force_recovery可以设置为1-6,大的数字包含前面所有数字的影响。
+当设置参数值大于0后，可以对表进行select,create,drop操作,但insert,update或者delete这类操作是不允许的。
+1(SRV_FORCE_IGNORE_CORRUPT):忽略检查到的corrupt页
+2(SRV_FORCE_NO_BACKGROUND):阻止主线程的运行，如主线程需要执行full purge操作，会导致crash
+3(SRV_FORCE_NO_TRX_UNDO):不执行事务回滚操作。
+4(SRV_FORCE_NO_IBUF_MERGE):不执行插入缓冲的合并操作。
+5(SRV_FORCE_NO_UNDO_LOG_SCAN):不查看重做日志，InnoDB存储引擎会将未提交的事务视为已提交。
+6(SRV_FORCE_NO_LOG_REDO):不执行前滚的操作。
 
