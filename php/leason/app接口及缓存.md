@@ -218,9 +218,91 @@ public static function show($code, $message = "", $data = array()) {
 
 
 
+## 缓存技术
 
+主要减少数据库的压力
 
+PHP操作缓存：
 
+1. 生成缓存
+2. 获取缓存
+3. 删除缓存
+
+### 文件缓存
+
+保存在磁盘的静态文件，将PHP生成的数据保存到静态文件中
+
+主要的操作就是读写文件，PHP的读写文件方式有很多，下面以`file_put_contents`为例
+
+由于文件缓存，使我们自己操作文件，所以对于文件内容的增删改查，需要我们自己进行封装，下面封装了，添加、获取、删除三个方法：
+
+```php
+const FILENAME = './files/index_cache.text';
+
+function putCache($filename, $value) {
+	if ($value !== '') {
+		// 第二个参数必须是字符串，返回字节数
+		return file_put_contents($filename, json_encode($value));
+	} else {
+		return false;
+	}
+}
+
+function getCache($filename) {
+	if (!is_file($filename)) {
+		return false;
+	} else {
+		return file_get_contents($filename);
+	}
+}
+
+function clearCache($filename) {
+	// 删除文件，成功：true，失败：false
+	return unlink($filename);
+}
+```
+
+### Memcache、Redis缓存
+
+**Redis:**
+
+是一个开源的使用ANSI [C语言](https://baike.baidu.com/item/C%E8%AF%AD%E8%A8%80)编写、支持网络、可基于内存亦可持久化的日志型、Key-Value[数据库](https://baike.baidu.com/item/%E6%95%B0%E6%8D%AE%E5%BA%93)，并提供多种语言的API。
+
+**Memcache:**
+
+是一套[分布式](https://baike.baidu.com/item/%E5%88%86%E5%B8%83%E5%BC%8F)的高速缓存系统，由[LiveJournal](https://baike.baidu.com/item/LiveJournal)的Brad Fitzpatrick开发，但目前被许多网站使用以提升网站的访问速度，尤其对于一些大型的、需要频繁访问[数据库](https://baike.baidu.com/item/%E6%95%B0%E6%8D%AE%E5%BA%93)的网站访问速度提升效果十分显著。
+
+相同和区别：
+
+1. 管理数据的
+2. 它们的数据都是存在内存的
+3. Redis可以定期将数据备份到磁盘（持久化）
+4. Memcache只是简单的key/value缓存
+5. Redis还支持list、set、hash等数据结构
+6. 都是缓存机制，主要用来减少数据库压力提高访问速度
+
+redis远程连接：
+
+```shell
+redis-cli -h 192.168.4.145 -p 6379
+```
+
+php使用redis，首先安装扩展php-redis扩展：
+
+```shell
+brew install php56-redis
+```
+
+操作redis代码：
+
+```php
+$redis = new Redis();
+$redis->connect('192.168.4.145', 6379);
+$redis->set('idool', 12311111111);
+// 可以设置过期时间
+$redis->setex('idool1', 10, 2312312);
+var_dump($redis->get('idool'));
+```
 
 
 

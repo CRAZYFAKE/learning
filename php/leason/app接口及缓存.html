@@ -868,6 +868,17 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 </li>
 </ul>
 </li>
+<li>
+<a href="#toc_7">缓存技术</a>
+<ul>
+<li>
+<a href="#toc_8">文件缓存</a>
+</li>
+<li>
+<a href="#toc_9">Memcache、Redis缓存</a>
+</li>
+</ul>
+</li>
 </ul>
 
 
@@ -1083,6 +1094,92 @@ json数据格式简单，易于读写，占用带宽小</p></li>
             break;
     }
 }
+</code></pre>
+
+<h2 id="toc_7">缓存技术</h2>
+
+<p>主要减少数据库的压力</p>
+
+<p>PHP操作缓存：</p>
+
+<ol>
+<li>生成缓存</li>
+<li>获取缓存</li>
+<li>删除缓存</li>
+</ol>
+
+<h3 id="toc_8">文件缓存</h3>
+
+<p>保存在磁盘的静态文件，将PHP生成的数据保存到静态文件中</p>
+
+<p>主要的操作就是读写文件，PHP的读写文件方式有很多，下面以<code>file_put_contents</code>为例</p>
+
+<p>由于文件缓存，使我们自己操作文件，所以对于文件内容的增删改查，需要我们自己进行封装，下面封装了，添加、获取、删除三个方法：</p>
+
+<pre><code class="language-php">const FILENAME = &#39;./files/index_cache.text&#39;;
+
+function putCache($filename, $value) {
+    if ($value !== &#39;&#39;) {
+        // 第二个参数必须是字符串，返回字节数
+        return file_put_contents($filename, json_encode($value));
+    } else {
+        return false;
+    }
+}
+
+function getCache($filename) {
+    if (!is_file($filename)) {
+        return false;
+    } else {
+        return file_get_contents($filename);
+    }
+}
+
+function clearCache($filename) {
+    // 删除文件，成功：true，失败：false
+    return unlink($filename);
+}
+</code></pre>
+
+<h3 id="toc_9">Memcache、Redis缓存</h3>
+
+<p><strong>Redis:</strong></p>
+
+<p>是一个开源的使用ANSI <a href="https://baike.baidu.com/item/C%E8%AF%AD%E8%A8%80">C语言</a>编写、支持网络、可基于内存亦可持久化的日志型、Key-Value<a href="https://baike.baidu.com/item/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a>，并提供多种语言的API。</p>
+
+<p><strong>Memcache:</strong></p>
+
+<p>是一套<a href="https://baike.baidu.com/item/%E5%88%86%E5%B8%83%E5%BC%8F">分布式</a>的高速缓存系统，由<a href="https://baike.baidu.com/item/LiveJournal">LiveJournal</a>的Brad Fitzpatrick开发，但目前被许多网站使用以提升网站的访问速度，尤其对于一些大型的、需要频繁访问<a href="https://baike.baidu.com/item/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a>的网站访问速度提升效果十分显著。</p>
+
+<p>相同和区别：</p>
+
+<ol>
+<li>管理数据的</li>
+<li>它们的数据都是存在内存的</li>
+<li>Redis可以定期将数据备份到磁盘（持久化）</li>
+<li>Memcache只是简单的key/value缓存</li>
+<li>Redis还支持list、set、hash等数据结构</li>
+<li>都是缓存机制，主要用来减少数据库压力提高访问速度</li>
+</ol>
+
+<p>redis远程连接：</p>
+
+<pre><code class="language-shell">redis-cli -h 192.168.4.145 -p 6379
+</code></pre>
+
+<p>php使用redis，首先安装扩展php-redis扩展：</p>
+
+<pre><code class="language-shell">brew install php56-redis
+</code></pre>
+
+<p>操作redis代码：</p>
+
+<pre><code class="language-php">$redis = new Redis();
+$redis-&gt;connect(&#39;192.168.4.145&#39;, 6379);
+$redis-&gt;set(&#39;idool&#39;, 12311111111);
+// 可以设置过期时间
+$redis-&gt;setex(&#39;idool1&#39;, 10, 2312312);
+var_dump($redis-&gt;get(&#39;idool&#39;));
 </code></pre>
 
 </div></body>
