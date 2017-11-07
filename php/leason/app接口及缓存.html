@@ -958,12 +958,8 @@ Web端和Server只使用上述定义的API来传递数据和改变数据状态�
 <blockquote>
 <p><a href="http://www.php.net/manual/en/function.json-encode.php">http://www.php.net/manual/en/function.json-encode.php</a></p>
 
-<p>The encoding is affected by the supplied <code>options</code> and additionally the encoding of float values depends on the value of <a href="http://php.net/manual/en/ini.core.php#ini.serialize-precision">serialize_precision</a>.</p>
-</blockquote>
+<p>The encoding is affected by the supplied <code>options</code> and additionally the encoding of float values depends on the value of <a href="http://php.net/manual/en/ini.core.php#ini.serialize-precision">serialize_precision</a>.​</p>
 
-<p>​</p>
-
-<blockquote>
 <p><a href="http://php.net/manual/en/ini.core.php#ini.serialize-precision">http://php.net/manual/en/ini.core.php#ini.serialize-precision</a></p>
 
 <p>The number of significant digits stored while serializing floating point numbers. -1 means that an enhanced algorithm for rounding such numbers will be used.</p>
@@ -971,58 +967,7 @@ Web端和Server只使用上述定义的API来传递数据和改变数据状态�
 
 <p>意思是序列化浮点数的精度，需要在<code>php.ini</code>文件设置<code>serialize_precision</code>属性，如果设置成<code>-1</code>的话，意味着将使用加强版的四舍五入算法。这样的设置的话，<code>json_encode</code>的精度问题就解决。</p>
 
-<p><strong>xml：</strong> DomDocument、XMLWriter、SimpleXML、手动拼装字符串：</p>
-
-<pre><code class="language-php">&lt;?php
-
-class Response {
-     /**
-     * 返回xml格式数据
-     * @param $result array 返回数据
-     * return xml
-     */
-    public static function xmlEncode($result) {
-        /**
-         * 修改响应头信息之后可以查看每个节点
-         * 默认是：Content-Type:text/html; charset=UTF-8
-         * 修改为：Content-Type:text/xml
-         */
-        // header(&#39;Content-Type:text/xml&#39;);
-        $xml = &quot;&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;\n&quot;;
-        $xml .= &quot;&lt;root&gt;\n&quot;;
-        $xml .= self::data2XML($result);
-        $xml .= &quot;&lt;/root&gt;\n&quot;;
-        echo $xml;
-        exit;
-    }
-
-    public static function data2XML($data) {
-        $xml = $attr = &quot;&quot;;
-        foreach ($data as $key =&gt; $value) {
-            //if (is_numeric($key)) {
-            //  $attr = &quot; id=&#39;{$key}&#39;&quot;;
-            //  $key  = &quot;item&quot;;
-            //}
-            $xml .= &quot;&lt;{$key}{$attr}&gt;&quot;;
-            // 递归遍历多维数组
-            $xml .= is_array($value) ? self::data2XML($value) : $value;
-            $xml .= &quot;&lt;/{$key}&gt;\n&quot;;
-        }
-        return $xml;
-    }
-}
-
-Response::xmlEncode(array(
-    &#39;code&#39;    =&gt; 200,
-    &#39;messgae&#39; =&gt; &#39;success&#39;,
-    &#39;data&#39;    =&gt; array(
-        &#39;id&#39;      =&gt; 1001,
-        &#39;name&#39;    =&gt; &#39;YYX&#39;,
-        &#39;address&#39; =&gt; &#39;河北&#39;,
-        &#39;arrayA&#39;  =&gt; array()
-    )
-));
-</code></pre></li>
+<p><strong>xml：</strong> DomDocument、XMLWriter、SimpleXML、手动拼装字符串</p></li>
 <li><p>传输速度：</p>
 
 <p>xml文件庞大，传输占用带宽，服务器端和客户端都需要花费大量代码来解析XML<br/>
@@ -1045,9 +990,9 @@ json数据格式简单，易于读写，占用带宽小</p></li>
 
 <p>code: 状态码</p>
 
-<p>message:提示信息，格式不正确，数据返回成功等</p>
+<p>message: 提示信息，格式不正确，数据返回成功等</p>
 
-<p>data:返回数据</p>
+<p>data: 返回数据</p>
 
 <p><strong>封装json</strong></p>
 
@@ -1065,7 +1010,56 @@ json数据格式简单，易于读写，占用带宽小</p></li>
 
 <p><strong>封装xml</strong></p>
 
-<p>用上面的方法</p>
+<pre><code class="language-php">&lt;?php
+
+class Response {
+         /**
+         * 返回xml格式数据
+         * @param $result array 返回数据
+         * return xml
+         */
+        public static function xmlEncode($result) {
+            /**
+             * 修改响应头信息之后可以查看每个节点
+             * 默认是：Content-Type:text/html; charset=UTF-8
+             * 修改为：Content-Type:text/xml
+             */
+            // header(&#39;Content-Type:text/xml&#39;);
+            $xml = &quot;&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;\n&quot;;
+            $xml .= &quot;&lt;root&gt;\n&quot;;
+            $xml .= self::data2XML($result);
+            $xml .= &quot;&lt;/root&gt;\n&quot;;
+            echo $xml;
+            exit;
+        }
+ 
+        public static function data2XML($data) {
+            $xml = $attr = &quot;&quot;;
+            foreach ($data as $key =&gt; $value) {
+                //if (is_numeric($key)) {
+                //  $attr = &quot; id=&#39;{$key}&#39;&quot;;
+                //  $key  = &quot;item&quot;;
+                //}
+                $xml .= &quot;&lt;{$key}{$attr}&gt;&quot;;
+                // 递归遍历多维数组
+                $xml .= is_array($value) ? self::data2XML($value) : $value;
+                $xml .= &quot;&lt;/{$key}&gt;\n&quot;;
+            }
+            return $xml;
+        }
+}
+
+Response::xmlEncode(array(
+     &#39;code&#39;    =&gt; 200,
+     &#39;messgae&#39; =&gt; &#39;success&#39;,
+     &#39;data&#39;    =&gt; array(
+        &#39;id&#39;      =&gt; 1001,
+        &#39;name&#39;    =&gt; &#39;YYX&#39;,
+        &#39;address&#39; =&gt; &#39;河北&#39;,
+        &#39;arrayA&#39;  =&gt; array()
+     )
+));
+</code></pre>
 
 <p><strong>总封装</strong></p>
 
