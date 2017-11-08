@@ -1,0 +1,557 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>语法.md</title><style type='text/css'>html, body {overflow-x: initial !important;}.CodeMirror { height: auto; }
+.CodeMirror-scroll { overflow-y: hidden; overflow-x: auto; }
+.CodeMirror-lines { padding: 4px 0px; }
+.CodeMirror pre { }
+.CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler { background-color: white; }
+.CodeMirror-gutters { border-right-width: 1px; border-right-style: solid; border-right-color: rgb(221, 221, 221); background-color: rgb(247, 247, 247); white-space: nowrap; }
+.CodeMirror-linenumbers { }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.CodeMirror div.CodeMirror-cursor { border-left-width: 1px; border-left-style: solid; border-left-color: black; z-index: 3; }
+.CodeMirror div.CodeMirror-secondarycursor { border-left-width: 1px; border-left-style: solid; border-left-color: silver; }
+.CodeMirror.cm-keymap-fat-cursor div.CodeMirror-cursor { width: auto; border: 0px; background-color: rgb(119, 238, 119); z-index: 1; background-position: initial initial; background-repeat: initial initial; }
+.CodeMirror div.CodeMirror-cursor.CodeMirror-overwrite { }
+.cm-tab { display: inline-block; }
+.cm-s-typora-default .cm-header, .cm-s-typora-default .cm-property { color: rgb(217, 79, 138); }
+.cm-s-typora-default pre.cm-header1:not(.cm-atom) :not(.cm-overlay) { font-size: 2rem; line-height: 2rem; }
+.cm-s-typora-default pre.cm-header2:not(.cm-atom) :not(.cm-overlay) { font-size: 1.4rem; line-height: 1.4rem; }
+.cm-s-typora-default .cm-atom, .cm-s-typora-default .cm-number { color: rgb(149, 132, 134); }
+.cm-s-typora-default .cm-table-row, .cm-s-typora-default .cm-block-start { font-family: monospace; }
+.cm-s-typora-default .cm-comment, .cm-s-typora-default .cm-code { color: rgb(74, 90, 159); font-family: monospace; }
+.cm-s-typora-default .cm-tag { color: rgb(169, 68, 66); }
+.cm-s-typora-default .cm-string { color: rgb(126, 134, 169); }
+.cm-s-typora-default .cm-link { color: rgb(196, 122, 15); text-decoration: underline; }
+.cm-s-typora-default .cm-variable-2, .cm-s-typora-default .cm-variable-1 { color: inherit; }
+.cm-s-typora-default .cm-overlay { font-size: 1rem; font-family: monospace; }
+.CodeMirror.cm-s-typora-default div.CodeMirror-cursor { border-left-width: 3px; border-left-style: solid; border-left-color: rgb(228, 98, 154); }
+.cm-s-typora-default .CodeMirror-activeline-background { left: -60px; right: -30px; background-color: rgba(204, 204, 204, 0.2); background-position: initial initial; background-repeat: initial initial; }
+.cm-s-typora-default .CodeMirror-gutters { border-right-style: none; background-color: inherit; }
+.cm-s-typora-default .cm-trailing-space-new-line::after, .cm-startspace::after, .cm-starttab .cm-tab::after { content: '•'; position: absolute; left: 0px; opacity: 0; font-family: LetterGothicStd, monospace; }
+.os-windows .cm-startspace::after, .os-windows .cm-starttab .cm-tab::after { left: -0.1em; }
+.cm-starttab .cm-tab::after { content: ' '; }
+.cm-startspace, .cm-tab, .cm-starttab, .cm-trailing-space-a, .cm-trailing-space-b, .cm-trailing-space-new-line { font-family: monospace; position: relative; }
+.cm-s-typora-default .cm-trailing-space-new-line::after { content: '↓'; opacity: 0.3; }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: black; }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-property { color: black; }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: blue; }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: bold; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: rgb(255, 0, 0); }
+.cm-invalidchar { color: rgb(255, 0, 0); }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { margin-bottom: -30px; margin-right: -30px; padding-bottom: 30px; padding-right: 30px; height: 100%; outline: none; position: relative; box-sizing: content-box; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-vscrollbar, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow-x: hidden; overflow-y: scroll; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow-y: hidden; overflow-x: scroll; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-width: 0px; background-color: transparent; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; word-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; background-position: initial initial; background-repeat: initial initial; }
+.CodeMirror-wrap pre { word-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right-width: 30px; border-right-style: solid; border-right-color: transparent; width: -webkit-fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right-style: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-widget { }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right-style: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.CodeMirror-selected { background-color: rgb(217, 217, 217); background-position: initial initial; background-repeat: initial initial; }
+.CodeMirror-focused .CodeMirror-selected { background-color: rgb(215, 212, 240); background-position: initial initial; background-repeat: initial initial; }
+.cm-searching { background-color: rgba(255, 255, 0, 0.4); background-position: initial initial; background-repeat: initial initial; }
+.CodeMirror span { }
+@media print { 
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+.CodeMirror-lint-markers { width: 16px; }
+.CodeMirror-lint-tooltip { background-color: infobackground; border: 1px solid black; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; color: infotext; font-family: monospace; overflow: hidden; padding: 2px 5px; position: fixed; white-space: pre-wrap; z-index: 10000; max-width: 600px; opacity: 0; transition: opacity 0.4s; font-size: 0.8em; }
+.CodeMirror-lint-mark-error, .CodeMirror-lint-mark-warning { background-position: left bottom; background-repeat: repeat no-repeat; }
+.CodeMirror-lint-mark-error { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAYAAAC09K7GAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sJDw4cOCW1/KIAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAHElEQVQI12NggIL/DAz/GdA5/xkY/qPKMDAwAADLZwf5rvm+LQAAAABJRU5ErkJggg==); }
+.CodeMirror-lint-marker-error, .CodeMirror-lint-marker-warning { cursor: pointer; display: inline-block; height: 16px; width: 16px; vertical-align: middle; position: relative; background-position: center center; background-repeat: no-repeat no-repeat; }
+.CodeMirror-lint-message-error, .CodeMirror-lint-message-warning { padding-left: 18px; background-position: left top; background-repeat: no-repeat no-repeat; }
+.CodeMirror-lint-marker-error, .CodeMirror-lint-message-error { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAHlBMVEW7AAC7AACxAAC7AAC7AAAAAAC4AAC5AAD///+7AAAUdclpAAAABnRSTlMXnORSiwCK0ZKSAAAATUlEQVR42mWPOQ7AQAgDuQLx/z8csYRmPRIFIwRGnosRrpamvkKi0FTIiMASR3hhKW+hAN6/tIWhu9PDWiTGNEkTtIOucA5Oyr9ckPgAWm0GPBog6v4AAAAASUVORK5CYII=); }
+.CodeMirror-lint-marker-warning, .CodeMirror-lint-message-warning { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAANlBMVEX/uwDvrwD/uwD/uwD/uwD/uwD/uwD/uwD/uwD6twD/uwAAAADurwD2tQD7uAD+ugAAAAD/uwDhmeTRAAAADHRSTlMJ8mN1EYcbmiixgACm7WbuAAAAVklEQVR42n3PUQqAIBBFUU1LLc3u/jdbOJoW1P08DA9Gba8+YWJ6gNJoNYIBzAA2chBth5kLmG9YUoG0NHAUwFXwO9LuBQL1giCQb8gC9Oro2vp5rncCIY8L8uEx5ZkAAAAASUVORK5CYII=); }
+.CodeMirror-lint-marker-multiple { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAMAAADzjKfhAAAACVBMVEUAAAAAAAC/v7914kyHAAAAAXRSTlMAQObYZgAAACNJREFUeNo1ioEJAAAIwmz/H90iFFSGJgFMe3gaLZ0od+9/AQZ0ADosbYraAAAAAElFTkSuQmCC); width: 100%; height: 100%; background-position: right bottom; background-repeat: no-repeat no-repeat; }
+
+
+html { font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(51, 51, 51); }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { background-color: rgb(181, 214, 252); text-shadow: none; background-position: initial initial; background-repeat: initial initial; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; padding-bottom: 70px; white-space: pre-wrap; overflow-x: auto; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+@media screen and (max-width: 500px) { 
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+.typora-export #write { margin: 0px auto; }
+#write > p:first-child, #write > ul:first-child, #write > ol:first-child, #write > pre:first-child, #write > blockquote:first-child, #write > div:first-child, #write > table:first-child { margin-top: 30px; }
+#write li > table:first-child { margin-top: -20px; }
+img { max-width: 100%; vertical-align: middle; }
+input, button, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; line-height: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+::before, ::after, * { box-sizing: border-box; }
+#write p, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write div, #write pre { width: inherit; }
+#write p, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6 { position: relative; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+p { -webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; }
+.mathjax-block { margin-top: 0px; margin-bottom: 0px; -webkit-margin-before: 0rem; -webkit-margin-after: 0rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: bold; font-style: italic; }
+a { cursor: pointer; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; margin: 4px 0px 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 80px; }
+.CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+pre { white-space: pre-wrap; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+.md-fences .CodeMirror.CodeMirror-wrap { top: -1.6em; margin-bottom: -1.6em; }
+.md-fences.mock-cm { white-space: pre-wrap; }
+.show-fences-line-number .md-fences { padding-left: 0px; }
+.show-fences-line-number .md-fences.mock-cm { padding-left: 40px; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; padding-top: 1em; padding-bottom: 1em; }
+.footnotes + .footnotes { margin-top: -1em; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background-color: transparent; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: normal; text-align: left; box-sizing: content-box; direction: ltr; background-position: initial initial; background-repeat: initial initial; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li p, li .mathjax-block { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; }
+@media print { 
+  html, body { height: 100%; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  h1, h2, h3, h4, h5, h6 { break-after: avoid-page; orphans: 2; }
+  p { orphans: 4; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 1cm; padding-right: 1cm; }
+  .typora-export #write::after { height: 0px; }
+  @page { margin: 20mm 0mm; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 2.86rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
+p .md-image:only-child { display: inline-block; width: 100%; text-align: center; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.mathjax-block { white-space: pre; overflow: hidden; width: 100%; }
+p + .mathjax-block { margin-top: -1.143rem; }
+.mathjax-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: none; box-shadow: none; }
+.task-list { list-style-type: none; }
+.task-list-item { position: relative; padding-left: 1em; }
+.task-list-item input { position: absolute; top: 0px; left: 0px; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc::after, .md-toc-content::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); text-decoration: none; }
+.md-toc-inner:hover { }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: bold; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) { 
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: '.'; }
+.md-tag { opacity: 0.5; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: monospace; }
+code { text-align: left; }
+h1 .md-tag, h2 .md-tag, h3 .md-tag, h4 .md-tag, h5 .md-tag, h6 .md-tag { font-weight: initial; opacity: 0.35; }
+a.md-print-anchor { border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: none !important; background-color: transparent !important; text-shadow: initial !important; background-position: initial initial !important; background-repeat: initial initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.mathjax-block .MathJax_SVG_Display { text-align: center; margin: 1em 0em; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: monospace; }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: normal; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none; }
+
+
+/* @font-face {
+  font-family: Source Han Sans SC;
+  font-weight: normal;
+  src: local('Source Han Sans SC Regular'), url("file:///Users/yaoyixiang/Library/Application%20Support/abnerworks.Typora/themes/catfish/SourceHanSansSC-Regular.otf");
+}
+@font-face {
+  font-family: Source Han Sans;
+  font-weight: bold;
+  src: local('Source Han Sans SC Bold'), url("file:///Users/yaoyixiang/Library/Application%20Support/abnerworks.Typora/themes/catfish/SourceHanSansSC-Bold.otf");
+}
+@font-face {
+  font-family: Source Han Serif;
+  font-weight: normal;
+  src: local('Source Han Serif SC Regular'), url("file:///Users/yaoyixiang/Library/Application%20Support/abnerworks.Typora/themes/catfish/SourceHanSerifSC-Regular.otf");
+}
+@font-face {
+  font-family: Source Han Serif;
+  font-weight: bold;
+  src: local('Source Han Serif SC Bold'), url("file:///Users/yaoyixiang/Library/Application%20Support/abnerworks.Typora/themes/catfish/SourceHanSerifSC-Bold.otf");
+}
+@font-face {
+  font-family: mononoki;
+  font-style: normal;
+  font-weight: normal;
+  src: local('mononoki Regular'), url("file:///Users/yaoyixiang/Library/Application%20Support/abnerworks.Typora/themes/catfish/mononoki-Regular.woff");
+}
+@font-face {
+  font-family: mononoki;
+  font-style: italic;
+  font-weight: normal;
+  src: local('mononoki Italic'), url("file:///Users/yaoyixiang/Library/Application%20Support/abnerworks.Typora/themes/catfish/mononoki-Italic.woff");
+}
+@font-face {
+  font-family: mononoki;
+  font-style: normal;
+  font-weight: bold;
+  src: local('mononoki Bold'), url("file:///Users/yaoyixiang/Library/Application%20Support/abnerworks.Typora/themes/catfish/mononoki-Bold.woff");
+}
+@font-face {
+  font-family: mononoki;
+  font-style: italic;
+  font-weight: bold;
+  src: local('mononoki Bold Italic'), url("file:///Users/yaoyixiang/Library/Application%20Support/abnerworks.Typora/themes/catfish/mononoki-BoldItalic.woff");
+} */
+html {
+  font-size: 16px;
+}
+body {
+  background: #fff;
+  /* font-family: Source Han Sans SC, sans-serif; */
+  color: #555;
+}
+#write {
+  max-width: 60em;
+}
+margin 0 auto {
+  padding: 20px 30px 50px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  position: relative;
+  margin-top: 0.7em;
+  margin-bottom: 0.7em;
+  font-weight: bold;
+  line-height: 1.4em;
+}
+h1 {
+  font-size: 2em;
+  line-height: 1.2em;
+}
+h2 {
+  font-size: 1.5em;
+  line-height: 1.225em;
+}
+h3 {
+  font-size: 1.3em;
+  line-height: 1.43em;
+}
+h4 {
+  font-size: 1.2em;
+}
+h5 {
+  font-size: 1em;
+}
+h6 {
+  font-size: 1em;
+  color: #999;
+}
+hr {
+  border: 1px solid #ddd;
+}
+a {
+  text-decoration: none;
+  color: #258fb8;
+}
+a:hover,
+a:active {
+  text-decoration: underline;
+}
+ul,
+ol {
+  padding-left: 2em;
+}
+.task-list {
+  padding-left: 2em;
+}
+.task-list-item {
+  padding-left: 1.6em;
+}
+.task-list-item input {
+  top: 3px;
+  left: 8px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+table th {
+  font-weight: bold;
+  border-bottom: 3px solid #ddd;
+  padding-bottom: 0.5em;
+}
+table td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+blockquote {
+  border-left: 5px solid #ddd;
+  padding-left: 0.5em;
+  /* font-family: Source Han Serif SC, serif; */
+  color: #555;
+}
+blockquote blockquote {
+  padding-right: 0;
+}
+.md-fences,
+code,
+tt {
+  margin: 0 0.3em;
+  padding: 0 0.3em;
+  background: #eee;
+  font-family: mononoki, Menlo;
+  text-shadow: 0 1px #fff;
+}
+.md-fences {
+  margin: 15px auto;
+  padding: 0.7em 1em;
+  text-shadow: none;
+}
+
+  /** ported from https://codemirror.net/theme/material.css **/
+  /*
+
+      Name:       material
+      Author:     Michael Kaminsky (http://github.com/mkaminsky11)
+
+      Original material color scheme by Mattia Astorino (https://github.com/equinusocio/material-theme)
+
+  */
+
+  .cm-s-inner {
+  background-color: #263238;
+  color: rgba(233, 237, 237, 1);
+  }
+  .cm-s-inner .CodeMirror-gutters {
+  background: #263238;
+  color: rgb(83,127,126);
+  border: none;
+  }
+  .cm-s-inner .CodeMirror-guttermarker, .cm-s-inner .CodeMirror-guttermarker-subtle, .cm-s-inner .CodeMirror-linenumber { color: rgb(83,127,126); }
+  .cm-s-inner .CodeMirror-cursor { border-left: 1px solid #f8f8f0; }
+  .cm-s-inner div.CodeMirror-selected { background: rgba(255, 255, 255, 0.15); }
+  .cm-s-inner.CodeMirror-focused div.CodeMirror-selected { background: rgba(255, 255, 255, 0.10); }
+  .cm-s-inner .CodeMirror-line::selection, .cm-s-inner .CodeMirror-line > span::selection, .cm-s-inner .CodeMirror-line > span > span::selection { background: rgba(255, 255, 255, 0.10); }
+  .cm-s-inner .CodeMirror-line::-moz-selection, .cm-s-inner .CodeMirror-line > span::-moz-selection, .cm-s-inner .CodeMirror-line > span > span::-moz-selection { background: rgba(255, 255, 255, 0.10); }
+
+  .cm-s-inner .CodeMirror-activeline-background { background: rgba(0, 0, 0, 0); }
+  .cm-s-inner .cm-keyword { color: rgba(199, 146, 234, 1); }
+  .cm-s-inner .cm-operator { color: rgba(233, 237, 237, 1); }
+  .cm-s-inner .cm-variable-2 { color: #80CBC4; }
+  .cm-s-inner .cm-variable-3 { color: #82B1FF; }
+  .cm-s-inner .cm-builtin { color: #DECB6B; }
+  .cm-s-inner .cm-atom { color: #F77669; }
+  .cm-s-inner .cm-number { color: #F77669; }
+  .cm-s-inner .cm-def { color: rgba(233, 237, 237, 1); }
+  .cm-s-inner .cm-string { color: #C3E88D; }
+  .cm-s-inner .cm-string-2 { color: #80CBC4; }
+  .cm-s-inner .cm-comment { color: #546E7A; }
+  .cm-s-inner .cm-variable { color: #82B1FF; }
+  .cm-s-inner .cm-tag { color: #80CBC4; }
+  .cm-s-inner .cm-meta { color: #80CBC4; }
+  .cm-s-inner .cm-attribute { color: #FFCB6B; }
+  .cm-s-inner .cm-property { color: #80CBAE; }
+  .cm-s-inner .cm-qualifier { color: #DECB6B; }
+  .cm-s-inner .cm-variable-3 { color: #DECB6B; }
+  .cm-s-inner .cm-tag { color: rgba(255, 83, 112, 1); }
+  .cm-s-inner .cm-error {
+  color: rgba(255, 255, 255, 1.0);
+  background-color: #EC5F67;
+  }
+  .cm-s-inner .CodeMirror-matchingbracket {
+  text-decoration: underline;
+  color: white !important;
+  }
+
+  /**apply to code fences with plan text**/
+  .md-fences {
+  background-color: #263238;
+  color: rgba(233, 237, 237, 1);
+  border: none;
+  }
+
+  .md-fences .code-tooltip {
+  background-color: #263238;
+  }
+
+  .cm-s-typora-default {
+  background-color: #263238;
+  color: rgba(233, 237, 237, 1);
+  }
+  .cm-s-typora-default .CodeMirror-gutters {
+  background: #263238;
+  color: rgb(83,127,126);
+  border: none;
+  }
+  .cm-s-typora-default .CodeMirror-guttermarker, .cm-s-typora-default .CodeMirror-guttermarker-subtle, .cm-s-typora-default .CodeMirror-linenumber { color: rgb(83,127,126); }
+  .cm-s-typora-default .CodeMirror-cursor { border-left: 1px solid #f8f8f0; }
+  .cm-s-typora-default div.CodeMirror-selected { background: rgba(255, 255, 255, 0.15); }
+  .cm-s-typora-default.CodeMirror-focused div.CodeMirror-selected { background: rgba(255, 255, 255, 0.10); }
+  .cm-s-typora-default .CodeMirror-line::selection, .cm-s-typora-default .CodeMirror-line > span::selection, .cm-s-typora-default .CodeMirror-line > span > span::selection { background: rgba(255, 255, 255, 0.10); }
+  .cm-s-typora-default .CodeMirror-line::-moz-selection, .cm-s-typora-default .CodeMirror-line > span::-moz-selection, .cm-s-typora-default .CodeMirror-line > span > span::-moz-selection { background: rgba(255, 255, 255, 0.10); }
+
+  .cm-s-typora-default .CodeMirror-activeline-background { background: rgba(0, 0, 0, 0); }
+  .cm-s-typora-default .cm-keyword { color: rgba(199, 146, 234, 1); }
+  .cm-s-typora-default .cm-operator { color: rgba(233, 237, 237, 1); }
+  .cm-s-typora-default .cm-variable-2 { color: #80CBC4; }
+  .cm-s-typora-default .cm-variable-3 { color: #82B1FF; }
+  .cm-s-typora-default .cm-builtin { color: #DECB6B; }
+  .cm-s-typora-default .cm-atom { color: #F77669; }
+  .cm-s-typora-default .cm-number { color: #F77669; }
+  .cm-s-typora-default .cm-def { color: rgba(233, 237, 237, 1); }
+  .cm-s-typora-default .cm-string { color: #C3E88D; }
+  .cm-s-typora-default .cm-string-2 { color: #80CBC4; }
+  .cm-s-typora-default .cm-comment { color: #546E7A; }
+  .cm-s-typora-default .cm-variable { color: #82B1FF; }
+  .cm-s-typora-default .cm-tag { color: #80CBC4; }
+  .cm-s-typora-default .cm-meta { color: #80CBC4; }
+  .cm-s-typora-default .cm-attribute { color: #FFCB6B; }
+  .cm-s-typora-default .cm-property { color: #80CBAE; }
+  .cm-s-typora-default .cm-qualifier { color: #DECB6B; }
+  .cm-s-typora-default .cm-variable-3 { color: #DECB6B; }
+  .cm-s-typora-default .cm-tag { color: rgba(255, 83, 112, 1); }
+  .cm-s-typora-default .cm-error {
+  color: rgba(255, 255, 255, 1.0);
+  background-color: #EC5F67;
+  }
+  .cm-s-typora-default .CodeMirror-matchingbracket {
+  text-decoration: underline;
+  color: white !important;
+  }
+
+  /**apply to code fences with plan text**/
+  .md-fences {
+  background-color: #263238;
+  color: rgba(233, 237, 237, 1);
+  border: none;
+  }
+
+  .md-fences .code-tooltip {
+  background-color: #263238;
+  }
+.CodeMirror div.CodeMirror-cursor {
+  border-left: 1px solid #e4629a;
+}
+
+  #write pre.md-meta-block {
+      padding: 1em;
+      background-color: #fff;
+      border-bottom: 1px dashed #ddd;
+      color: #80cbc4;
+      margin-top: 0 !important;
+  }
+.md-image>.md-meta {
+  color: inherit;
+}
+header,
+.context-menu,
+.megamenu-content,
+footer {
+  font-family: Source Han Sans SC, sans-serif;
+}
+@media print {
+  html {
+    font-size: 13px;
+  }
+  table,
+  pre {
+    page-break-inside: avoid;
+  }
+  pre {
+    word-wrap: break-word;
+  }
+}
+header,
+.context-menu,
+.megamenu-content,
+footer {
+  font-family: Helvetica Neue, Helvetica, Segoe UI, Arial, sans-serif;
+}
+
+
+
+</style>
+</head>
+<body class='typora-export' >
+<div  id='write'  class = 'is-mac'><div class='md-toc' mdtype='toc'><p class="md-toc-content"><span class="md-toc-item md-toc-h1" data-ref="c9"><a class="md-toc-inner" href="#header-c9">基本语法</a></span><span class="md-toc-item md-toc-h1" data-ref="c10"><a class="md-toc-inner" href="#header-c10">面向对象</a></span><span class="md-toc-item md-toc-h2" data-ref="c11"><a class="md-toc-inner" href="#header-c11">类</a></span><span class="md-toc-item md-toc-h3" data-ref="c12"><a class="md-toc-inner" href="#header-c12">构造函数和析构函数</a></span><span class="md-toc-item md-toc-h2" data-ref="c18"><a class="md-toc-inner" href="#header-c18">继承</a></span><span class="md-toc-item md-toc-h2" data-ref="c45"><a class="md-toc-inner" href="#header-c45">抽象类/抽象方法</a></span><span class="md-toc-item md-toc-h2" data-ref="c64"><a class="md-toc-inner" href="#header-c64">接口</a></span><span class="md-toc-item md-toc-h3" data-ref="c81"><a class="md-toc-inner" href="#header-c81">多态</a></span><span class="md-toc-item md-toc-h1" data-ref="c86"><a class="md-toc-inner" href="#header-c86">命名空间</a></span><span class="md-toc-item md-toc-h2" data-ref="c125"><a class="md-toc-inner" href="#header-c125">include和require</a></span><span class="md-toc-item md-toc-h1" data-ref="c128"><a class="md-toc-inner" href="#header-c128">自动加载</a></span><span class="md-toc-item md-toc-h2" data-ref="c129"><a class="md-toc-inner" href="#header-c129">__autoload()</a></span><span class="md-toc-item md-toc-h2" data-ref="c137"><a class="md-toc-inner" href="#header-c137">spl_autoload_register</a></span><span class="md-toc-item md-toc-h1" data-ref="c139"><a class="md-toc-inner" href="#header-c139">PHP常见关键字</a></span><span class="md-toc-item md-toc-h2" data-ref="c140"><a class="md-toc-inner" href="#header-c140">final</a></span><span class="md-toc-item md-toc-h2" data-ref="c155"><a class="md-toc-inner" href="#header-c155">static</a></span><span class="md-toc-item md-toc-h2" data-ref="c168"><a class="md-toc-inner" href="#header-c168">const</a></span><span class="md-toc-item md-toc-h2" data-ref="c169"><a class="md-toc-inner" href="#header-c169">instanceof</a></span></p></div><p></p><h1><a name='header-c9' class='md-header-anchor '></a>基本语法</h1><h1><a name='header-c10' class='md-header-anchor '></a>面向对象</h1><h2><a name='header-c11' class='md-header-anchor '></a>类</h2><h3><a name='header-c12' class='md-header-anchor '></a>构造函数和析构函数</h3><p>使用方法：</p><pre class="md-fences md-end-block md-focus" lang="php"> <div class="CodeMirror cm-s-inner CodeMirror-wrap    CodeMirror-focused"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 100px; left: 119px;"></div><div class="CodeMirror-hscrollbar" style="left: 0px;"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-vscrollbar"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; min-height: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><div style="width: 50px; height: 50px; overflow-x: scroll;"></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" style=""><div class="" style="position: relative;"><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-variable">Construct</span> {</span></pre></div><pre class=""><span style="padding-right: 0.1px;"> &nbsp;  <span class="cm-comment">// 构造函数，可以传参数</span></span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-tab">    </span><span class="cm-keyword">public</span> <span class="cm-keyword">function</span> <span class="cm-variable">__construct</span>(<span class="cm-variable-2">$type</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>) {</span></pre><pre><span style="padding-right: 0.1px;"><span class="cm-tab">    </span><span class="cm-tab">    </span><span class="cm-keyword">echo</span> <span class="cm-string">"构造方法传入参数 \$type =&gt; {$type}&lt;br&gt;"</span>;</span></pre><pre><span style="padding-right: 0.1px;"><span class="cm-tab">    </span>}</span></pre><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><pre><span style="padding-right: 0.1px;"> &nbsp;  <span class="cm-comment">// 析构函数</span></span></pre></div><pre><span style="padding-right: 0.1px;"><span class="cm-tab">    </span><span class="cm-keyword">public</span> <span class="cm-keyword">function</span> <span class="cm-variable">__destruct</span>() {</span></pre><pre><span style="padding-right: 0.1px;"><span class="cm-tab">    </span><span class="cm-tab">    </span><span class="cm-keyword">echo</span> <span class="cm-string">"析构方法"</span>;</span></pre><div class="" style="position: relative;"><pre><span style="padding-right: 0.1px;"><span class="cm-tab">    </span>}</span></pre></div><pre class=""><span style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; top: 0px;"></div><div class="CodeMirror-gutters" style="display: none; height: 200px;"></div></div></div></pre><p>手动调用析构函数使用<code>unset()</code>方法</p><h2><a name='header-c18' class='md-header-anchor '></a>继承</h2><blockquote><p>建议使用对象组合，来达到类的扩展性。不能滥用继承，继承不建议超过三层。</p><p>这点得慢慢体会，暂时还没有发现有什么问题</p></blockquote><ol start='' ><li><p>继承子类可以拥有父类除private修饰词修饰的意外的属性和方法（此处涉及到private、public、protected修饰词的权限控制）</p></li><li><p>函数名相同时，子类会重写父类的方法</p></li><li><p>构造方法：</p><p>1) 实例化子类，如果子类没有构造方法时，会调用父类的构造方法，如果有构造方法，则调用自己的构造</p><p>2) 子类想调用父类的构造方法时，使用关键字parent</p></li><li><p><code>final</code>关键字</p><p>1) <code>class</code>前使用final，则类不能被继承</p><p>2)<code>function</code>前使用final，则方法不能被重写</p></li></ol><h2><a name='header-c45' class='md-header-anchor '></a>抽象类/抽象方法</h2><p>只要方法被<code>abstract</code>修饰的，那么他所在的类也必须被<code>abstract</code>修饰</p><p>抽象类也可以不包含抽象方法，可以包含普通函数，子类必须把抽象方法实现</p><pre class="md-fences md-end-block" lang="php"> <div class="CodeMirror cm-s-inner CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"></div><div class="CodeMirror-hscrollbar" style="left: 0px;"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-vscrollbar"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; min-height: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><div style="width: 50px; height: 50px; overflow-x: scroll;"></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">abstract</span> <span class="cm-keyword">class</span> <span class="cm-variable">Person</span> {</span></pre></div><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">public</span> <span class="cm-keyword">abstract</span> <span class="cm-keyword">function</span> <span class="cm-variable">say</span>();</span></pre><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">public</span> <span class="cm-keyword">abstract</span> <span class="cm-keyword">function</span> <span class="cm-variable">run</span>();</span></pre><pre class=""><span style="padding-right: 0.1px;">  </span></pre><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">public</span> <span class="cm-keyword">function</span> <span class="cm-variable">eat</span>() {</span></pre><pre class=""><span style="padding-right: 0.1px;"> &nbsp;  <span class="cm-keyword">echo</span> <span class="cm-string">"吃东西"</span>;</span></pre><pre class=""><span style="padding-right: 0.1px;">  }</span></pre><pre class=""><span style="padding-right: 0.1px;">}</span></pre><pre class=""><span style="padding-right: 0.1px;"><span>​</span></span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-comment">// 子类必须把抽象方法实现,而且方法不需要使用abstract修饰</span></span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-variable">Student</span> <span class="cm-keyword">extends</span> <span class="cm-variable">Person</span> {</span></pre><pre class=""><span style="padding-right: 0.1px;">  </span></pre><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">public</span> <span class="cm-keyword">function</span> <span class="cm-variable">say</span>() {</span></pre><pre class=""><span style="padding-right: 0.1px;"> &nbsp;  <span class="cm-keyword">echo</span> <span class="cm-string">"说话"</span>;</span></pre><pre class=""><span style="padding-right: 0.1px;">  }</span></pre><pre class=""><span style="padding-right: 0.1px;">  </span></pre><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">public</span> <span class="cm-keyword">function</span> <span class="cm-variable">run</span>() {</span></pre><pre class=""><span style="padding-right: 0.1px;"> &nbsp;  <span class="cm-keyword">echo</span> <span class="cm-string">"跑"</span>;</span></pre><pre class=""><span style="padding-right: 0.1px;">  }</span></pre><pre class=""><span style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; top: 0px;"></div><div class="CodeMirror-gutters" style="display: none; height: 400px;"></div></div></div></pre><ol start='' ><li>含有抽象方法的类一定是抽象类</li><li>抽象类不一定含有抽象方法</li><li>抽象类中可以有普通的方法</li><li>抽象类不能直接实例化，必须由一个子类去继承它，并把父类所有的抽象方法实现（重写）</li></ol><h2><a name='header-c64' class='md-header-anchor '></a>接口</h2><ol start='' ><li>声明关键字interface</li><li>接口中可以声明常量和抽象方法</li><li>接口中的方法都是抽象方法，不需要使用<code>abstract</code>修饰</li><li>接口不能实例化，需要一个类去实现它<code>implements</code></li><li>一个类可以实现多个接口</li></ol><h3><a name='header-c81' class='md-header-anchor '></a>多态</h3><pre class="md-fences md-end-block" lang="php"> <div class="CodeMirror cm-s-inner CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"></div><div class="CodeMirror-hscrollbar" style="left: 0px;"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-vscrollbar"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; min-height: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><div style="width: 50px; height: 50px; overflow-x: scroll;"></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">interface</span> <span class="cm-variable">USB</span> {</span></pre></div><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">public</span> <span class="cm-keyword">function</span> <span class="cm-variable">run</span>();</span></pre><pre class=""><span style="padding-right: 0.1px;">}</span></pre><pre class=""><span style="padding-right: 0.1px;"><span>​</span></span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-variable">Mouse</span> <span class="cm-keyword">implements</span> <span class="cm-variable">USB</span> {</span></pre><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">public</span> <span class="cm-keyword">function</span> <span class="cm-variable">run</span>() {</span></pre><pre class=""><span style="padding-right: 0.1px;"> &nbsp;  <span class="cm-variable-2">$this</span><span class="cm-operator">-&gt;</span><span class="cm-variable">init</span>();</span></pre><pre class=""><span style="padding-right: 0.1px;">  }</span></pre><pre class=""><span style="padding-right: 0.1px;">  </span></pre><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">private</span> <span class="cm-keyword">function</span> <span class="cm-variable">init</span>() {</span></pre><pre class=""><span style="padding-right: 0.1px;"> &nbsp;  <span class="cm-keyword">echo</span> <span class="cm-string">"Mouse running..."</span>;</span></pre><pre class=""><span style="padding-right: 0.1px;">  }</span></pre><pre class=""><span style="padding-right: 0.1px;">}</span></pre><pre class=""><span style="padding-right: 0.1px;"><span>​</span></span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-variable">Store</span> <span class="cm-keyword">implements</span> <span class="cm-variable">USB</span> {</span></pre><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">public</span> <span class="cm-keyword">function</span> <span class="cm-variable">run</span>() {</span></pre><pre class=""><span style="padding-right: 0.1px;"> &nbsp;  <span class="cm-variable-2">$this</span><span class="cm-operator">-&gt;</span><span class="cm-variable">init</span>();</span></pre><pre class=""><span style="padding-right: 0.1px;">  }</span></pre><pre class=""><span style="padding-right: 0.1px;">  </span></pre><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">private</span> <span class="cm-keyword">function</span> <span class="cm-variable">init</span>() {</span></pre><pre class=""><span style="padding-right: 0.1px;"> &nbsp;  <span class="cm-keyword">echo</span> <span class="cm-string">"Store running..."</span>;</span></pre><pre class=""><span style="padding-right: 0.1px;">  }</span></pre><pre class=""><span style="padding-right: 0.1px;">}</span></pre><pre class=""><span style="padding-right: 0.1px;"><span>​</span></span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-variable">Keyboard</span> <span class="cm-keyword">implements</span> <span class="cm-variable">USB</span> {</span></pre><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">public</span> <span class="cm-keyword">function</span> <span class="cm-variable">run</span>() {</span></pre><pre class=""><span style="padding-right: 0.1px;"> &nbsp;  <span class="cm-variable-2">$this</span><span class="cm-operator">-&gt;</span><span class="cm-variable">init</span>();</span></pre><pre class=""><span style="padding-right: 0.1px;">  }</span></pre><pre class=""><span style="padding-right: 0.1px;">  </span></pre><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">private</span> <span class="cm-keyword">function</span> <span class="cm-variable">init</span>() {</span></pre><pre class=""><span style="padding-right: 0.1px;"> &nbsp;  <span class="cm-keyword">echo</span> <span class="cm-string">"Keyboard running..."</span>;</span></pre><pre class=""><span style="padding-right: 0.1px;">  }</span></pre><pre class=""><span style="padding-right: 0.1px;">}</span></pre><pre class=""><span style="padding-right: 0.1px;"><span>​</span></span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-variable">Computer</span> {</span></pre><pre class=""><span style="padding-right: 0.1px;">  </span></pre><pre class=""><span style="padding-right: 0.1px;">  <span class="cm-keyword">public</span> <span class="cm-keyword">function</span> <span class="cm-variable">useUSB</span>(<span class="cm-variable-2">$obj</span>) {</span></pre><pre class=""><span style="padding-right: 0.1px;"> &nbsp;  <span class="cm-variable-2">$obj</span><span class="cm-operator">-&gt;</span><span class="cm-variable">run</span>();</span></pre><pre class=""><span style="padding-right: 0.1px;">  }</span></pre><pre class=""><span style="padding-right: 0.1px;">}</span></pre><pre class=""><span style="padding-right: 0.1px;"><span>​</span></span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-variable-2">$computer</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">Computer</span>();</span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-variable-2">$computer</span><span class="cm-operator">-&gt;</span><span class="cm-variable">useUSB</span>(<span class="cm-keyword">new</span> <span class="cm-variable">Mouse</span>());</span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-variable-2">$computer</span><span class="cm-operator">-&gt;</span><span class="cm-variable">useUSB</span>(<span class="cm-keyword">new</span> <span class="cm-variable">Store</span>());</span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-variable-2">$computer</span><span class="cm-operator">-&gt;</span><span class="cm-variable">useUSB</span>(<span class="cm-keyword">new</span> <span class="cm-variable">Keyboard</span>());</span></pre></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; top: 0px;"></div><div class="CodeMirror-gutters" style="display: none; height: 900px;"></div></div></div></pre><p></p><h1><a name='header-c86' class='md-header-anchor '></a>命名空间</h1><ol start='' ><li><p>同一命名空间下，不能出现重复的类名</p></li><li><p>类、接口、函数和常量受到命名空间的影响</p></li><li><p><code>define()</code> 为全局常量，不受命名空间影响</p></li><li><p>使用use导入命名空间下的类</p></li><li><p>如果导入了不同命名空间下的两个相同名称相同的类，使用别名as，如 </p><pre class="md-fences md-end-block" lang="php"> <div class="CodeMirror cm-s-inner CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"></div><div class="CodeMirror-hscrollbar" style="left: 0px;"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-vscrollbar"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; min-height: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><div style="width: 50px; height: 50px; overflow-x: scroll;"></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">use</span> <span class="cm-variable">vender\Imooc</span> <span class="cm-keyword">as</span> <span class="cm-variable">Imooc2</span>;</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; top: 0px;"></div><div class="CodeMirror-gutters" style="display: none; height: 20px;"></div></div></div></pre></li><li><p>同样可以使用use 导入function和常量</p><pre class="md-fences md-end-block" lang="php"> <div class="CodeMirror cm-s-inner CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"></div><div class="CodeMirror-hscrollbar" style="left: 0px;"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-vscrollbar"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; min-height: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><div style="width: 50px; height: 50px; overflow-x: scroll;"></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">use</span> <span class="cm-keyword">function</span> <span class="cm-variable">vender\session\like</span>;</span></pre></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">use</span> <span class="cm-keyword">const</span> <span class="cm-variable">vender\session\IMOOC</span>;</span></pre></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; top: 0px;"></div><div class="CodeMirror-gutters" style="display: none; height: 40px;"></div></div></div></pre></li><li><p>如果没有使用namespace指定当前脚本的命名空间的话，当前脚本是全局命名空间的</p></li><li><p>如何在局部命名空间，调用全局命名空间的类和函数呢？</p><ul><li><p>使用反斜杠<code>\Test()</code>，意思是告诉PHP，使用全局作用域下的class Test</p></li><li><p>如果不加反斜杠()的话</p><p>如果是变量和函数，会首先在当前命名空间下寻找变量和函数的定义，如果没有的话，再去全局命名空间找。</p><p>如果是类的话，会直接在当前命名空间下寻找</p></li></ul></li></ol><h2><a name='header-c125' class='md-header-anchor '></a>include和require</h2><p></p><h1><a name='header-c128' class='md-header-anchor '></a>自动加载</h1><h2><a name='header-c129' class='md-header-anchor '></a>__autoload()</h2><p>使用<code>__autoload()</code>函数</p><p>当当前文件没有Imooc6类时，会执行__autoload函数，传入实例化类的名字Imooc6</p><p>但是并不常用。</p><pre class="md-fences md-end-block" lang="php"> <div class="CodeMirror cm-s-inner CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"></div><div class="CodeMirror-hscrollbar" style="left: 0px;"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-vscrollbar"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; min-height: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><div style="width: 50px; height: 50px; overflow-x: scroll;"></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">function</span> <span class="cm-variable">__autoload</span>(<span class="cm-variable-2">$className</span>) {</span></pre></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-tab">    </span><span class="cm-keyword">require</span> <span class="cm-variable-2">$className</span> . <span class="cm-string">".php"</span>;</span></pre><pre class=""><span style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; top: 0px;"></div><div class="CodeMirror-gutters" style="display: none; height: 60px;"></div></div></div></pre><h2><a name='header-c137' class='md-header-anchor '></a>spl_autoload_register</h2><pre class="md-fences md-end-block" lang="php"> <div class="CodeMirror cm-s-inner CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"></div><div class="CodeMirror-hscrollbar" style="left: 0px;"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-vscrollbar"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; min-height: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><div style="width: 50px; height: 50px; overflow-x: scroll;"></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-variable">spl_autoload_register</span>(<span class="cm-keyword">function</span> (<span class="cm-variable-2">$className</span>){</span></pre></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-tab">    </span><span class="cm-keyword">require</span> <span class="cm-variable-2">$className</span> . <span class="cm-string">".php"</span>;</span></pre><pre class=""><span style="padding-right: 0.1px;">});</span></pre><pre class=""><span style="padding-right: 0.1px;"><span>​</span></span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-variable">spl_autoload_register</span>(<span class="cm-keyword">function</span> (<span class="cm-variable-2">$className</span>) {</span></pre><pre class=""><span style="padding-right: 0.1px;"><span class="cm-tab">    </span><span class="cm-keyword">include</span> <span class="cm-builtin">str_replace</span>(<span class="cm-string">"\\"</span>, <span class="cm-string">"/"</span>, <span class="cm-variable-2">$className</span> . <span class="cm-string">".php"</span>);</span></pre><pre class=""><span style="padding-right: 0.1px;">});</span></pre></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; top: 0px;"></div><div class="CodeMirror-gutters" style="display: none; height: 140px;"></div></div></div></pre><h1><a name='header-c139' class='md-header-anchor '></a>PHP常见关键字</h1><h2><a name='header-c140' class='md-header-anchor '></a>final</h2><ol start='' ><li>使用final标识的类不能被继承</li><li>使用final标识的方法不能被重写</li></ol><blockquote><p>目的：</p><p>一是为了安全</p><p>二是没有必要重写或继承</p></blockquote><h2><a name='header-c155' class='md-header-anchor '></a>static</h2><ol start='' ><li><p>类的属性和方法，不是对象的</p></li><li><p>不能在static函数 调用非static属性</p></li><li><p>子类调用父类的static属性或方法：</p><p>使用关键字<code>parent</code></p></li></ol><h2><a name='header-c168' class='md-header-anchor '></a>const</h2><h2><a name='header-c169' class='md-header-anchor '></a>instanceof</h2></div>
+</body>
+</html>
