@@ -134,3 +134,41 @@ innodb_force_recovery可以设置为1-6,大的数字包含前面所有数字的�
 5(SRV_FORCE_NO_UNDO_LOG_SCAN):不查看重做日志，InnoDB存储引擎会将未提交的事务视为已提交。
 6(SRV_FORCE_NO_LOG_REDO):不执行前滚的操作。
 
+## MAMP安装PHP扩展
+
+此处以`redis`扩展为例
+
+网上寻找`redis.so`扩展包下载，我下载到了`/usr/local/Cellar/php56-redis/3.1.3/redis.so`目录下
+
+然后配置，`php.ini`文件
+
+添加一行代码：
+
+```ini
+extension=/usr/local/Cellar/php56-redis/3.1.3/redis.so
+```
+
+重启MAMP即可。
+
+**或者：**
+
+对于MAMP4.X版本的用户：
+
+1. `cd /Applications/MAMP/bin/php/php*.*.*/bin`，执行`./pecl install redis`会安装默认版本，或者执行`./pecl install redis-3.1.2`来安装指定版本
+
+2. 打开MAMP pro面板，LANGUAGE-PHP，点击`Manually enable other extensions`，找到对应版本的`php.ini`文件，添加一行：
+
+   ```ini
+   extension="redis.so"
+   ```
+
+   如果你不是专业版用户的话，编辑`/Applications/MAMP/bin/php/php7.x.x/conf/php.ini`文件即可
+
+3. 重新启动MAMP
+
+>[各种版本的Redis扩展包](https://github.com/CRAZYFAKE/php-redis-mamp)
+>
+>其他环境的PHP也可以使用这种方式安装扩展
+
+
+
