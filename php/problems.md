@@ -172,3 +172,30 @@ extension=/usr/local/Cellar/php56-redis/3.1.3/redis.so
 
 
 
+##Laravel5.5 执行php artisan migrate时报错
+
+报错：
+
+```shell
+[Illuminate\Database\QueryException]                                                                                                
+SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes (SQL: alter table `users` add unique `users_email_unique`(`email`))      
+  
+[PDOException]                                                                                                   
+SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes
+```
+
+解决方法：
+
+https://github.com/laravel/framework/issues/17508
+
+修改 `AppServiceProvider.php` 的 `boot()`函数，添加 `Schema::defaultStringLength(191);`
+
+如下：
+
+```php
+public function boot()
+{
+  Schema::defaultStringLength(191);
+}
+```
+
