@@ -174,3 +174,5 @@ vagrant box update
 若要使用 VMware 提供器，你需要同时购买 VMware Fusion／Workstation 以及 [VMware Vagrant 插件](https://www.vagrantup.com/vmware)。尽管 VMware 不是免费的，但 VMware 可以提供更快的共享文件夹性能。
 
 若要使用 Parallels 提供器，你需要安装 [Parallels Vagrant 插件](https://github.com/Parallels/vagrant-parallels)。这是免费的。
+
+所以我选 [VirtualBox 5.1](https://www.virtualbox.org/wiki/Downloads) 。
