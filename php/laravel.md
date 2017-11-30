@@ -132,9 +132,22 @@ laravel使用前100名的第三方包：[laravel-package-top-100](https://github
 1. 创建模型和迁移文件
 
    ```shell
-   php artisan make:model Http/Models/Article -m
+   php artisan make:model Models/Article -m
    ```
 
+
+   创建模型以及对应的控制器，以及数据库迁移文件
+
+   ```shell
+   php artisan make:model Models/User -m
+   php artisan make:controller UsersController -r
+   ```
+
+   麻烦，下面一行命令解决
+
+   ```shell
+   php artisan make:model Models/Item -crm
+   ```
 
 2. 执行数据库迁移文件
 
@@ -184,7 +197,6 @@ laravel使用前100名的第三方包：[laravel-package-top-100](https://github
    ​
 
    ​
-
 
 ## 单元测试
 
