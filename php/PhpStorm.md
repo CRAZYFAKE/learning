@@ -13,7 +13,7 @@
 | 代码格式化               | `CMD + Shift + Option + L` | `Ctrl + Num 0`   |
 | 代码重构（Refactor This） | `Ctrl + T`                 |                  |
 | 修改变量名、函数名           | `Shitf + F6`               |                  |
-| 多点编辑                | Ctrl + G                   |                  |
+| 多点编辑                | `Ctrl + G`                 |                  |
 |                     |                            |                  |
 |                     |                            |                  |
 
