@@ -4,9 +4,9 @@
 
 > 参考 [Laravel 项目开发规范](https://fsdhub.com/books/laravel-specification)
 
-#一. 前言
+# 一. 前言
 
-#二. 项目规范
+# 二. 项目规范
 
 ## 2.1 Laravel版本选择
 
@@ -28,7 +28,7 @@
 composer create-project laravel/laravel project-name --prefer-dist "5.5.*"
 ```
 
-##2.2 开发和线上环境
+## 2.2 开发和线上环境
 
 [开发和线上环境](https://fsdhub.com/books/laravel-specification/511/development-environment)
 
@@ -66,7 +66,7 @@ CDN_DOMAIN=cdndomain.com
 
 在此统一规定：所有程序配置信息 **必须** 通过 `config()` 来读取，所有的 `.env` 配置信息 **必须** 通过 `config()` 来读取，**绝不** 在配置文件以外的范围使用 `env()`。
 
-##2.5 辅助函数
+## 2.5 辅助函数
 
 Laravel 提供了很多 [辅助函数](http://d.laravel-china.org/docs/5.5/helpers)，有时候我们也需要创建自己的辅助函数。
 
@@ -86,11 +86,11 @@ require __DIR__ . '/helpers.php';
 
 文档页面排版 **必须** 遵循 [中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines) ，在此基础上。
 
-##2.7 工具统一
+## 2.7 工具统一
 
 [工具统一](https://fsdhub.com/books/laravel-specification/525/tool-unification)
 
-#三. 编码规范
+# 三. 编码规范
 
 ## 3.1 代码风格
 
@@ -102,7 +102,7 @@ require __DIR__ . '/helpers.php';
 Preferences -> Editor -> Code style[PHP] -> Set From -> Predefined Style[PSR1/PSR2]
 ```
 
-##3.2 路由器
+## 3.2 路由器
 
 **路由闭包：**
 
@@ -270,7 +270,7 @@ Laravel 5.3 及以上版本的 `diffForHumans`，只需要在 `config/app.php` �
 'locale' => 'zh-CN',
 ```
 
-#四. 其他
+# 四. 其他
 
 ## 4.1 Laravel 安全实践
 
@@ -356,4 +356,4 @@ https://fsdhub.com/books/laravel-specification/527/laravel-optimization
 
 [代码生成器](https://fsdhub.com/books/laravel-specification/527/laravel-optimization)
 
-#五. 附录
+# 五. 附录
