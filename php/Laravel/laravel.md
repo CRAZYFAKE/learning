@@ -70,6 +70,7 @@ laravel使用前100名的第三方包：[laravel-package-top-100](https://github
    php artisan make:model Models/Item -crm
    ```
 
+
 2. 执行数据库迁移文件
 
    ```shell
@@ -117,6 +118,98 @@ laravel使用前100名的第三方包：[laravel-package-top-100](https://github
 
    ​
 
+## artisan 命令修改数据库字段
+
+**如何修改已存在的字段类型、重命名字段以及删除字段等操作？**
+
+**1）**前提条件：需要添加 `doctrine/dbal` 依赖，有下面两个依赖
+
+a）在 `composer.json` 文件的 `require` 字段中添加：
+
+```json
+"require": {
+    "doctrine/dbal": "^2.6"
+}
+```
+
+b）直接运行下面命令：
+
+```shell
+composer require doctrine/dbal
+```
+
+**2）** 创建数据库迁移文件：
+
+```shell
+php artisan make:migration v1_update_tables
+```
+
+『 v1_update_tables 』名称可以自定义，运行完之后，会在 `database/migrations` 目录下生成一个文件：
+
+`2017_12_12_161615_v1_update_tables.php` 修改字段的代码在『 这个文件』内写。
+
+**3）** 编写修改字代码，举栗子：
+
+**修改：** `change` 方法让你可以修改一些已存在的字段类型，或修改字段属性
+
+我们把 `users` 的 `name` 字段长度增加到 50，在 `up` 函数，添加一下代码
+
+```php
+Schema::table('users', function (Blueprint $table) {
+    $table->string('name', 50)->change();
+});
+```
+
+我们也能将字段修改为 nullable：
+
+```php
+Schema::table('users', function (Blueprint $table) {
+    $table->string('name', 50)->nullable()->change();
+});
+```
+
+> 下面的字段类型不能被「修改」:
+>
+> **char，double，enum，mediumInteger，timestamp，tinyInteger，ipAddress，json，jsonb，macAddress，mediumIncre**
+
+**重命名：**使用数据库结构构造器的 `renameColumn` 方法
+
+我们把 `users` 中的 `from` 字段改为 `to`
+
+```php
+Schema::table('users', function (Blueprint $table) {
+    $table->renameColumn('from', 'to');
+});
+```
+
+**移除字段：**使用数据库结构构造器的 `dropColumn` 方法
+
+```php
+Schema::table('users', function (Blueprint $table) {
+    $table->dropColumn('votes');
+});
+```
+
+你可以传递多个字段的数组至 `dropCloumn` 方法来移除多个字段：
+
+```php
+Schema::table('users', function (Blueprint $table) {
+    $table->dropColumn(['votes', 'avatar', 'location']);
+});
+```
+
+> SQLite 数据库并不支持在单个迁移中移除或修改多个字段。
+
+**4）** 执行数据库迁移命令
+
+```shell
+php artisan migrate
+```
+
+
+
+
+
 ## 创建自定义的 PHP 辅助函数
 
 Laravel 提供了很多优秀的 [辅助函数](https://d.laravel-china.org/docs/5.5/helpers) 来处理数组、文件路径、字符串和路由，还有最受欢迎的 `dd()` 函数。
@@ -134,7 +227,7 @@ Laravel 提供了很多优秀的 [辅助函数](https://d.laravel-china.org/docs
 
 **2）**在 Laravel 的 `composer.json` 文件中看到 `autoload` 和 `autoload-dev` 这两个键
 
-​      如果想添加辅助函数文件，`composer.json` 中 `autoload` 有一个 `files` 键，添加下面代码：
+如果想添加辅助函数文件，`composer.json` 中 `autoload` 有一个 `files` 键，添加下面代码：
 
       ```php
 "autoload": {
