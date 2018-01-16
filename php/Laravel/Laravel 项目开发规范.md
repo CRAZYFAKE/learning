@@ -6,6 +6,10 @@
 
 # 一. 前言
 
+## 1.1 说明
+
+参照 [优帆远扬](https://laravel-china.org/topics/3626/laravel-remote-and-its-sails-and-freedom#%E4%BC%98%E5%B8%86%E8%BF%9C%E6%89%AC) 团队内部 Laravel 工程师践行的开发规范
+
 # 二. 项目规范
 
 ## 2.1 Laravel版本选择
@@ -30,11 +34,52 @@ composer create-project laravel/laravel project-name --prefer-dist "5.5.*"
 
 ## 2.2 开发和线上环境
 
-[开发和线上环境](https://fsdhub.com/books/laravel-specification/511/development-environment)
+### 环境说明
+
+一般情况下分为三种：
+
+* Local  - 开发环境
+* Staging - 线上测试环境
+* Production - 线上生产环境
+
+### 软件使用
+
+**PHP 7**
+
+PHP 版本 **应该** 优先考虑 PHP 7，不止因为其运行高效，还因为随着 PHP 7 的广泛应用，PHP 7 以下的版本将会很快停止维护。
+
+**MySQL 5.7**
+
+数据库软件 **应该** 优先选择 MySQL，因为其使用率最高。MySQL 5.7 与 PHP 7 一样，已经是大势所趋，选择版本时 **应该** 优先考虑 MySQL 5.7。
+
+**其他软件**
+
+优先选择 **流行** **稳定** 版本。线上环境 **绝不** 使用 Beta 或者其他不稳定发行版。
 
 ## 2.3 开发专用扩展包
 
-[开发专用扩展包](https://fsdhub.com/books/laravel-specification/513/development-specific-extensions-package)
+如果在项目中用到开发环境中专用的扩展包，生产环境中并不会使用到，为了避免无用的负载， 必须严格控制其安装和加载。
+
+**安装**
+
+安装时需要必须添加 `--dev` 参数，如
+
+```shell
+composer require laracasts/generators --dev
+```
+
+**加载**
+
+开发专用的 provider `绝不`在 `config/app.php` 里面注册，`必须` 在 `app/Providers/AppServiceProvider.php` 文件中使用如以下方式：
+
+```php
+public function register()
+{
+    if ($this->app->environment() == 'local') {
+        $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
+    }
+}
+```
 
 ## 2.4 配置信息与环境变量
 
@@ -66,6 +111,11 @@ CDN_DOMAIN=cdndomain.com
 
 在此统一规定：所有程序配置信息 **必须** 通过 `config()` 来读取，所有的 `.env` 配置信息 **必须** 通过 `config()` 来读取，**绝不** 在配置文件以外的范围使用 `env()`。
 
+### 为什么
+
+1. 定义分明，`config()` 是配置信息，`env()` 只是用来区分不同环境；
+2. 代码健壮性， `config()` 在 `env()` 之上多出来一个抽象层，会使代码更加健壮，更加灵活。
+
 ## 2.5 辅助函数
 
 Laravel 提供了很多 [辅助函数](http://d.laravel-china.org/docs/5.5/helpers)，有时候我们也需要创建自己的辅助函数。
@@ -84,11 +134,19 @@ require __DIR__ . '/helpers.php';
 
 ## 2.6 项目文档编写规范
 
+每一个项目都 **必须** 包含一个 `readme.md` 文件，`readme` 里书写这个项目的简单信息。
+
+作用主要有两个：
+
+1. 团队新成员可从此文件中快速获悉项目大致情况
+
+2. 部署项目时可以作为参考
+
+   ​
+
 文档页面排版 **必须** 遵循 [中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines) ，在此基础上。
 
-## 2.7 工具统一
-
-[工具统一](https://fsdhub.com/books/laravel-specification/525/tool-unification)
+范例见 [附录：readme-example.md](https://fsdhub.com/books/laravel-specification/523/readme-examplemd)
 
 # 三. 编码规范
 
@@ -180,33 +238,15 @@ class Photo extends Model
 - 数据库表外键 `必须` 为「resource_id」，如：`user_id`, `post_id`
 - 数据模型变量 `必须` 为「resource_id」，如：`$user_id`, `$post_id`
 
+> 直接使用框架自带的命令 `php artisan make:model ModelName` 即可
+
+
+
 **关于SQL文件：**
 
 - **绝不** 使用命令行或者 PHPMyAdmin 直接创建索引或表。**必须** 使用 [数据库迁移](http://laravel-china.org/docs/5.5/migrations) 去创建表结构，并提交版本控制器中；
 - **绝不** 为了共享对数据库更改就直接导出 SQL，所有修改都 **必须** 使用 [数据库迁移](http://laravel-china.org/docs/5.5/migrations) ，并提交版本控制器中；
 - **绝不** 直接向数据库手动写入伪造的测试数据。**必须** 使用 [数据填充](http://laravel-china.org/docs/5.5/seeding) 来插入假数据，并提交版本控制器中。
-
-**全局作用域：**
-
-Laravel 的 [Model 全局作用域](https://laravel-china.org/docs/5.3/eloquent#global-scopes) 允许我们为给定模型的所有查询添加默认的条件约束。
-
-所有的全局作用域都 **必须** 统一使用 `闭包定义全局作用域`，如下：
-
-```php
-/**
- * 数据模型的启动方法
- *
- * @return void
- */
-protected static function boot()
-{
-    parent::boot();
-
-    static::addGlobalScope('age', function(Builder $builder) {
-        $builder->where('age', '>', 200);
-    });
-}
-```
 
 ## 3.4 控制器
 
@@ -217,11 +257,13 @@ protected static function boot()
 
 ## 3.5 视图
 
-https://fsdhub.com/books/laravel-specification/506/view
+可能暂时 不会用
 
-## 3.6 表单验证
+如果用到，后面再增加
 
-https://fsdhub.com/books/laravel-specification/507/form-validation
+## 3.6 参数验证
+
+参考 [Laravel 5.5 参数验证](https://d.laravel-china.org/docs/5.5/validation#using-rule-objects)
 
 ## 3.7 授权策略
 
@@ -268,6 +310,26 @@ Laravel 5.3 及以上版本的 `diffForHumans`，只需要在 `config/app.php` �
 
 ```php
 'locale' => 'zh-CN',
+```
+
+## 3.10 Artisan 命令行
+
+所有的自定义命令，都 **必须** 有项目的命名空间。
+
+如：
+
+```
+php artisan ygb:clear-token
+php artisan ygb:send-status-email
+...
+```
+
+错误的例子为：
+
+```
+php artisan clear-token
+php artisan send-status-email
+...
 ```
 
 # 四. 其他
@@ -351,9 +413,5 @@ Laravel 默认对所有『非幂等的请求』强制使用 `VerifyCsrfToken` �
 ## 4.2 Laravel 程序优化
 
 https://fsdhub.com/books/laravel-specification/527/laravel-optimization
-
-## 4.3 代码生成器 
-
-[代码生成器](https://fsdhub.com/books/laravel-specification/527/laravel-optimization)
 
 # 五. 附录
