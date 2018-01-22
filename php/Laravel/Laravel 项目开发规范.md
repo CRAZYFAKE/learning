@@ -48,6 +48,8 @@ composer create-project laravel/laravel project-name --prefer-dist "5.5.*"
 
 PHP 版本 **应该** 优先考虑 PHP 7，不止因为其运行高效，还因为随着 PHP 7 的广泛应用，PHP 7 以下的版本将会很快停止维护。
 
+[7.0还是7.1]()
+
 **MySQL 5.7**
 
 数据库软件 **应该** 优先选择 MySQL，因为其使用率最高。MySQL 5.7 与 PHP 7 一样，已经是大势所趋，选择版本时 **应该** 优先考虑 MySQL 5.7。
@@ -59,6 +61,8 @@ PHP 版本 **应该** 优先考虑 PHP 7，不止因为其运行高效，还因�
 ## 2.3 开发专用扩展包
 
 如果在项目中用到开发环境中专用的扩展包，生产环境中并不会使用到，为了避免无用的负载， 必须严格控制其安装和加载。
+
+扩展包固定版本！
 
 **安装**
 
@@ -82,6 +86,8 @@ public function register()
 ```
 
 ## 2.4 配置信息与环境变量
+
+开发环境 Homestead！
 
 假如我们有个『CDN 域名』的变量，在 Laravel 中有以下几种方法：
 
@@ -120,17 +126,19 @@ CDN_DOMAIN=cdndomain.com
 
 Laravel 提供了很多 [辅助函数](http://d.laravel-china.org/docs/5.5/helpers)，有时候我们也需要创建自己的辅助函数。
 
-**必须** 把所有的『自定义辅助函数』存放于 `bootstrap` 文件夹中。
+**必须** 把所有的『自定义辅助函数』存放于 `bootstrap/tools` 文件夹中。
 
 并在 `bootstrap/app.php` 文件的最顶部进行加载：
 
 ```php
 <?php
 
-require __DIR__ . '/helpers.php';
+require __DIR__ . '/tools/functions.php';
 
 ...
 ```
+
+
 
 ## 2.6 项目文档编写规范
 
@@ -168,7 +176,7 @@ Preferences -> Editor -> Code style[PHP] -> Set From -> Predefined Style[PSR1/PS
 
 路由器要保持干净整洁，**绝不** 放置除路由配置以外的其他程序逻辑。
 
-**路由命名：**
+**路由命名：**querystring？
 
 **必须** 优先使用 Restful 路由，配合资源控制器使用，见 [文档](http://d.laravel-china.org/docs/5.5/controllers#RESTful-%E8%B5%84%E6%BA%90%E6%8E%A7%E5%88%B6%E5%99%A8)。
 
@@ -226,18 +234,6 @@ class Photo extends Model
 }
 ```
 
-**命名规范：**
-
-- 数据模型类名 `必须` 为「单数」, 如：`App\Models\Photo`
-- 类文件名 `必须` 为「单数」，如：`app/Models/Photo.php`
-- 数据库表名字 `必须` 为「复数」，多个单词情况下使用「[Snake Case](https://en.wikipedia.org/wiki/Snake_case)」 如：`photos`, `my_photos`
-- 数据库表迁移名字 `必须` 为「复数」，如：`2014_08_08_234417_create_photos_table.php`
-- 数据填充文件名 `必须` 为「复数」，如：`PhotosTableSeeder.php`
-- 数据库字段名 `必须` 为「[Snake Case](https://en.wikipedia.org/wiki/Snake_case)」，如：`view_count`, `is_vip`
-- 数据库表主键 `必须` 为「id」
-- 数据库表外键 `必须` 为「resource_id」，如：`user_id`, `post_id`
-- 数据模型变量 `必须` 为「resource_id」，如：`$user_id`, `$post_id`
-
 > 直接使用框架自带的命令 `php artisan make:model ModelName` 即可
 
 
@@ -255,6 +251,8 @@ class Photo extends Model
 > - 类名：PhotosController
 > - 文件名：PhotosController.php
 
+类名文件名，相同
+
 ## 3.5 视图
 
 可能暂时 不会用
@@ -265,15 +263,7 @@ class Photo extends Model
 
 参考 [Laravel 5.5 参数验证](https://d.laravel-china.org/docs/5.5/validation#using-rule-objects)
 
-## 3.7 授权策略
-
-**授权策略：**
-
-**必须** 使用 [授权策略](http://d.laravel-china.org/docs/5.5/authorization#policies) 类来做用户授权。
-
-https://fsdhub.com/books/laravel-specification/508/policy
-
-## 3.8 数据填充
+## 3.7 数据填充
 
 **factory 辅助函数：**
 
@@ -300,7 +290,7 @@ User::insert($users->toArray());
 
 以上只执行一条数据库语句，推荐阅读 [大批量假数据填充的正确方法](https://laravel-china.org/topics/2066/the-correct-method-for-filling-large-quantity-of-false-data)。
 
-## 3.9 日期和时间
+## 3.8 日期和时间
 
 **必须** 使用 [Carbon](https://github.com/briannesbitt/Carbon) 来处理日期和时间相关的操作。
 
@@ -312,7 +302,7 @@ Laravel 5.3 及以上版本的 `diffForHumans`，只需要在 `config/app.php` �
 'locale' => 'zh-CN',
 ```
 
-## 3.10 Artisan 命令行
+## 3.9 Artisan 命令行
 
 所有的自定义命令，都 **必须** 有项目的命名空间。
 
@@ -415,3 +405,80 @@ Laravel 默认对所有『非幂等的请求』强制使用 `VerifyCsrfToken` �
 https://fsdhub.com/books/laravel-specification/527/laravel-optimization
 
 # 五. 附录
+
+## 5.1 php7.0 or php7.1
+
+https://www.symfony.fi/entry/php-7-1-vs-7-0-benchmarks-symfony
+
+
+
+**从 7.0 到 7.1新特性：**
+
+1. Nullable 类型，可为空类型
+
+   类型现在允许为空，当启用这个特性时，传入的参数或者函数返回的结果要么是给定的类型，要么是 [null](http://php.net/manual/zh/language.types.null.php) 。可以通过在类型前面加上一个问号来使之成为可为空的。
+
+2. Void 函数
+
+   返回值类型允许为 `void`，返回值声明为 `void` 类型的方法要么干脆省去 `return` 语句，要么使用一个空的 `return` 语句。 
+
+   当获取一个 `void` 方法的返回值是，会得到 `null`  ，并且不会有任何警告。
+
+3. 短数组语法
+
+   在 PHP5.4 之前只能通过 `array()` 来定义数组，5.4之后添加了 `[]` 的简化写法
+
+   短数组语法（*[]*）现在可以用于将数组的值赋给一些变量（包括在*foreach*中）。 这种方式使从数组中提取值变得更为容易。
+
+   ```php
+   <?php
+   $data = [
+       ['id' => 1, 'name' => 'Tom'],
+       ['id' => 2, 'name' => 'Fred'],
+   ];
+
+   while (['id' => $id, 'name' => $name] = $data) {
+       // logic here with $id and $name
+   }
+   ```
+
+4. 类常量可见性
+
+   这个特性说起来比较简单，就是现在类中的常量支持使用 `public`、`private` 和 `protected` 修饰了。
+
+   此外，接口（interface）中的常量只能是 `public` 属性
+
+5. 多条件 catch 
+
+   新的实现中可以在一个 `catch` 中设置多个条件，相当于或的形式判断：
+
+   ```php
+   <?php
+   try {
+       // Some code...
+   } catch (ExceptionType1 | ExceptionType2 $e) {
+       // 对于 ExceptionType1 和 ExceptionType2 的处理
+   } catch (\Exception $e) {
+       // ...
+   }
+   ```
+
+6. 支持为负的字符串偏移量
+
+   一个负数的偏移量会被理解为一个从字符串结尾开始的偏移量。
+
+   ```php
+   <?php
+   var_dump("abcdef"[-2]);
+   var_dump(strpos("aabbcc", "b", -3));
+
+   // 输出：
+   // string (1) "e"
+   // int(3) 
+   ```
+
+   ​
+
+参考：http://php.net/supported-versions.php
+
+Php 各个版本的支持：   ![Currently Supported Versions](../../_picture/phpCurrentlySupportedVersions.png)
