@@ -176,13 +176,21 @@ Preferences -> Editor -> Code style[PHP] -> Set From -> Predefined Style[PSR1/PS
 
 路由器要保持干净整洁，**绝不** 放置除路由配置以外的其他程序逻辑。
 
-**路由命名：**querystring？
+**路由命名：**
 
 **必须** 优先使用 Restful 路由，配合资源控制器使用，见 [文档](http://d.laravel-china.org/docs/5.5/controllers#RESTful-%E8%B5%84%E6%BA%90%E6%8E%A7%E5%88%B6%E5%99%A8)。
 
-![1](https://fsdhubcdn.phphub.org/uploads/images/201705/19/1/09GHC72ygP.png)
+**GET 请求路由命名**
 
-超出 Restful 路由的，**应该** 模仿上图的方式来定义路由
+以获取用户信息接口为例，有两种方式：
+
+`GET <domain>/api/app/user/info/{userId}` 
+
+或者
+
+`GET <domain>/api/app/user/info?userId={userId}`
+
+**必须** 使用第二种方式命名，这样参数明确，错误排查方便
 
 ## 3.3 数据模型
 
@@ -235,8 +243,8 @@ class Photo extends Model
 ```
 
 > 直接使用框架自带的命令 `php artisan make:model ModelName` 即可
-
-
+>
+> 或者使用 项目自定义命令 `php artisan mtime:model [ModelName]`
 
 **关于SQL文件：**
 
@@ -308,18 +316,26 @@ Laravel 5.3 及以上版本的 `diffForHumans`，只需要在 `config/app.php` �
 
 如：
 
-```
-php artisan ygb:clear-token
-php artisan ygb:send-status-email
+```Shell
+php artisan mtime:clear-token
+php artisan mtime:send-status-email
 ...
 ```
 
 错误的例子为：
 
-```
+```shell
 php artisan clear-token
 php artisan send-status-email
 ...
+```
+
+新增命令：
+
+```shell
+php artisan mtime:model [ModelName]
+php artisan mtime:controller [ModelController]
+php artisan mtime:logic [ModelLogic]
 ```
 
 # 四. 其他
