@@ -43,18 +43,20 @@ init.bat
 进入 /Homestead 目录下，运行：
 
 ```shell
-vagrant box add laravel/homestead
+vagrant box list
 ```
 
 **坑：**被墙了，所以需要翻墙，关键是一个 box 大小在 1G 左右。
 
 或者
 
-**安装离线包**，以 virtualbox 为例
+[**安装离线包**](#F1001)，以 virtualbox 为例
 
 ```shell
 vagrant box add laravel/homestead ~/Downloads/virtualbox.box
 ```
+
+`~/Downloads/virtualbox.box` 是已经下载到本地的 box
 
 离线 virtualbox.box 地址，包含 v4.0.0、v5.0.0、v5.0.1三个版本，后续会继续添加：
 
@@ -161,11 +163,15 @@ sites:
 http://mtime.test
 ```
 
+## 配置 Homestead.yaml
+
+
+
 
 
 # Vagrant 常用命令
 
-前提：进入 /Homestead 目录
+前提：进入 `/Homestead` 目录
 
 **初始化：**
 
@@ -262,3 +268,65 @@ vagrant box remove
 若要使用 Parallels 提供器，你需要安装 [Parallels Vagrant 插件](https://github.com/Parallels/vagrant-parallels)。这是免费的。
 
 所以我选 [VirtualBox 5.1](https://www.virtualbox.org/wiki/Downloads) 。
+
+
+
+<div id="F1001"></div>
+
+## 离线安装 vagrant box
+
+在 `virtualbox.box` 的目录，直接运行：
+
+```shell
+#vagrant box add source
+vagrant box add laravel/homestead virtualbox.box
+```
+
+这种直接将 `virtualbox.box` 的结果是：
+
+```shell
+vagrant box list #查看box列表
+
+laravel/homestead (virtualbox, 0)     #出现的结果
+laravel/homestead (virtualbox, 4.0.0) #4.0.0 是在线安装的结果
+```
+
+在线安装的 box 是显示版本号的，安装本地的 box 版本号是 0，
+
+这样的结果就是 `laravel/homestead` 没有正确的版本号，也可以 **指定版本号**。
+
+**带版本号的添加方案：**
+
+新建一个 `metadata.json` 文件，写入一下内容：
+
+```json
+{
+    "name": "laravel/homestead",
+    "versions": [{
+        "version": "5.0.0",
+        "providers": [{
+            "name": "virtualbox",
+            "url": "./virtualbox-v5.0.0.box"
+        }]
+    }]
+}
+```
+
+这样添加的 box 版本号就不是 0 ，而是 5.0.0。
+
+这时如果你直接运行 `vagrant up` 的时候也会直接跳到下载最新版的盒子。
+
+**解决方法：**
+
+在你的 `Homestead` 项目下修改 `Vagrantfile` 文件的 第`20`行后，加入如下配置：
+
+```yaml
+config.vm.box = "laravel/homestead" #box的名字（需与盒子列表中的一致）
+config.vm.box_version = "0"         #box的版本号（需与盒子列表中的一致）
+config.vm.box_check_update = false  #box是否检查更新
+```
+
+然后 `vagrant up` 即可。
+
+
+
