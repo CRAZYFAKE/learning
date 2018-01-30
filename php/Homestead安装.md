@@ -50,7 +50,7 @@ vagrant box list
 
 或者
 
-[**安装离线包**](#F1001)，以 virtualbox 为例
+[**安装离线**](#F1001)，以 virtualbox 为例
 
 ```shell
 vagrant box add laravel/homestead ~/Downloads/virtualbox.box
