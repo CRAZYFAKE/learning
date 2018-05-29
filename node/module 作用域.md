@@ -6,7 +6,7 @@
 
 首先node.js使用的CommonJS规范就是给每个文件都是独立的作用域。
 
-Node关于module的[源码](https://github.com/nodejs/node/blob/master/lib/module.js)：
+Node关于module的[源码](https://github.com/nodejs/node/blob/master/lib/internal/modules/cjs/loader.js#L668)：
 
 ```javascript
 var wrapper = Module.wrap(content);
