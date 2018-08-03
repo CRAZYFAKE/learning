@@ -74,7 +74,6 @@
    SHOW GLOBAL STATUS LIKE '%Slow_queries%';
    ```
 
-   
 
 
 
