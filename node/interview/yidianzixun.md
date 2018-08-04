@@ -4,29 +4,154 @@
 
 #### 1. 面向对象特征，怎么理解js的封装继承和多态
 
+原型链
+
 #### 2. 怎么让变量私有化
+
+第一种: 
+
+```javascript
+function car(){ 
+    var wheel = 3; //私有变量 
+    this.wheel = 4; //公有变量 
+    alert(wheel); 
+    alert(this.wheel); 
+} 
+var car1 = new car(); //结果是：3 4
+```
 
 #### 3. js怎样实现单线程机制（事件循环队列）
 
 #### 4. 什么是闭包
 
+闭包就是能够读取其他函数内部变量的函数。
+
+闭包就是将函数内部和函数外部连接起来的一座桥梁
+
+闭包用途: 
+
+1) 可以读取函数内部的变量
+
+2) 让这些变量的值始终保存在内存中
+
 #### 5. this相关问题，如何手动实现函数的bind方法，什么场景下用apply
+
+this问题：
+
+call和apply方法都是在调用之后立即执行的。而bind调用之后是返回原函数，需要再调用一次才行
+
+应用apply：
+
+改变this指向，实现继承，实现柯里化（把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数）
 
 #### 6. 如何判断一个变量是数组，如何判断一个对象是object（不能是null）
 
+判断数组：
+
+1. 
+
+```javascript
+function isArrayFn (o) { 
+	return Object.prototype.toString.call(o) === '[object Array]'; 
+} 
+```
+
+2. 
+
+```javascript
+Array.isArray()
+```
+
 #### 7.如何处理异步回调，如何实现一个Promise， co模块实现原理
 
-#### 8. 什么是函数式编程，什么是偏函数与柯哩化？
+co模块原理：自动执行 generator 函数
+
+Generator 就是一个异步操作的容器。它的自动执行需要一种机制，当异步操作有了结果，能够自动交回执行权。
+
+两种方法可以做到这一点。
+
+（1）回调函数。将异步操作包装成 Thunk 函数，在回调函数里面交回执行权。
+
+（2）Promise 对象。将异步操作包装成 Promise 对象，用`then`方法交回执行权。
+
+co 模块其实就是将两种自动执行器（Thunk 函数和 Promise 对象），包装成一个模块。使用 co 的前提条件是，Generator 函数的`yield`命令后面，只能是 Thunk 函数或 Promise 对象。如果数组或对象的成员，全部都是 Promise 对象，也可以使用 co
+
+#### 8. 什么是函数式编程，什么是偏函数与柯里化？
+
+函数式编程：
+
+此处的函数的意义是指数学上的函数
+
+偏函数：创建一个调用另外一个部分-----参数或变量已经预置的函数-----的函数
+
+```javascript
+var toString = Object.prototype.toString;
+var isString = function(obj){
+    return toString.call(obj) == '[object String]';
+}
+var isFunction = function(obj){
+    return toString.call(obj) == '[object Function]';
+}
+```
+
+如果需要判断的对象类型很多，那么isXXX一个一个写，代码繁冗。
+
+这时候我们可以观察上面几个isXXX的规律，发现都是用传入的对象执行toString()来判断类型。
+
+这时候，我们引入一个新的函数：
+
+```javascript
+var isType = function (type) {
+    return function (obj) {
+        return Object.prototype.toString.call(obj) == '[object ' + type + ']';
+    }
+}
+```
+
+这种通过指定部分参数来产生一个新的定制函数的形式就是偏函数。
+
+柯里化：将一个低阶函数转换为高阶函数的过程就叫柯里化，简单理解是：传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数。
 
 #### 9. ES6相关特性
 
+1. [let 和 const 命令](http://es6.ruanyifeng.com/#docs/let)
+2. [变量的解构赋值](http://es6.ruanyifeng.com/#docs/destructuring)
+3. [数值的扩展](http://es6.ruanyifeng.com/#docs/number)
+4. [函数的扩展](http://es6.ruanyifeng.com/#docs/function) 箭头函数
+5. [数组的扩展](http://es6.ruanyifeng.com/#docs/array)
+6. [Set 和 Map 数据结构](http://es6.ruanyifeng.com/#docs/set-map)
+7. [Promise 对象](http://es6.ruanyifeng.com/#docs/promise)
+8. [Generator 函数的语法](http://es6.ruanyifeng.com/#docs/generator)
+9. [Class 的基本语法](http://es6.ruanyifeng.com/#docs/class)
+
 #### 10. 比较一下js与其他语言的优缺点
+
+优点：
+
+
+
+缺点：
 
 ### Nodejs层面
 
 #### 1. 应用什么框架（express/koa/koa2/egg等），并阐述此框架的优缺点
 
+koa和express：
+
+1. koa的中间件洋葱图，所有的请求经过一个中间件的时候都会执行两次，对比 Express 形式的中间件，Koa 的模型可以非常方便的实现后置处理逻辑
+2. Express 只有 Request 和 Response 两个对象不同，Koa 增加了一个 Context 的对象，作为这次请求的上下文对象
+3. 通过同步方式编写异步代码带来的另外一个非常大的好处就是异常处理非常自然，使用 `try catch` 就可以将按照规范编写的代码中的所有错误都捕获到
+
+egg：
+
+1. Egg 1.x 发布时，Node.js 的 LTS 版本尚不支持 async function，所以 Egg 1.x 仍然基于 Koa 1.x 开发，但是在此基础上，Egg 全面增加了 async function 的支持，再加上 Egg 对 Koa 2.x 的中间件也完全兼容，应用层代码可以完全基于 `async function` 来开发
+2. Node.js 8 正式进入 LTS 后，async function 可以在 Node.js 中使用并且没有任何性能问题了，Egg 2.x 基于 Koa 2.x，框架底层以及所有内置插件都使用 async function 编写
+
 #### 2. node的web框架如何实现中间件
+
+https://zhuanlan.zhihu.com/p/30384677
+
+https://cnodejs.org/topic/58824b20250bf4e2390e9e59
 
 #### 3. 如何进行流式编程，如何实现一个可读可写流，pipe方法的原理是什么
 
