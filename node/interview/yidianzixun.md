@@ -578,7 +578,7 @@ console.log(a);
 
 **左旋转：**
 
-逆时针旋转红黑树的两个节点，是的父节点被自己的右子树取代，而自己成为右子树的左子树节点
+逆时针旋转红黑树的两个节点，使得父节点被自己的右子树取代，而自己成为右子树的左子树节点
 
 ![](http://5b0988e595225.cdn.sohucs.com/images/20171102/b3cd82550b29445eac5b6e6b0f40f03c.png)
 
@@ -593,7 +593,7 @@ console.log(a);
 **应用：**
 
 1. JDK集合类TreeMap和TreeSet底层就是红黑树，JAVA8里的 HashMap也是红黑树
-2. 
+2. Nodejs 的 `setTimeout` 和 `setInterval` 两个方法
 
 **AVL：**平衡二叉树
 
