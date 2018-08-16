@@ -397,7 +397,52 @@ TCP是传输层，而http是应用层
 
 #### 9 如何用redis实现分布式锁
 
+> **用一个状态值表示锁，对锁的占用和释放通过状态值来标识**
+
+为了确保分布式锁可用，我们至少要保证锁的实现同时满足一下四个条件：
+
+1. 互斥性。在任意时刻，只有一个客户端能持有锁
+2. 不会发生死锁，即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁
+3. 具有容错性。只要大部分的redis节点正常运行，客户端就可以加锁和解锁
+4. 加锁 和 解锁必须是同一个客户端，客户端A不能解锁客户端B的锁
+
+**方式：**
+
+使用 Redis 命令 `SETNX`
+
+1）setNX（SET if Not eXists）语法：
+
+```
+SETNX key value
+```
+
+将 `key` 的值设为 `value` ，当且仅当 `key` 不存在。若给定的 `key` 已经存在，则 SETNX 不做任何动作。
+
+返回值：设置成功，返回1；设置失败，返回0。
+
+2）EXPIRE 设置key过期时间：
+
+```
+EXPIRE key timeout
+```
+
+为key设置一个超时时间，单位为second，超过这个时间锁会自动释放，避免死锁。
+
+3）delete 删除key
+
+```
+DELETE key
+```
+
+
+
 #### 10 三大范式是什么，什么时候适合反范式设计数据库
+
+第一范式
+
+第二范式
+
+第三范式
 
 #### 11 如何进行sql优化，如何知道哪些sql比较耗时
 
@@ -439,13 +484,29 @@ https://www.cnblogs.com/luckcs/articles/7105206.html
 
 #### 9 集群部署，session 个用一套，如何做登录
 
+
+
 #### 10 什么是虚拟ip，在什么场景下会用到虚拟ip
 
 ### 安全层面
 
 #### 1 前端攻击（xss与csrf） 服务器如何防护
 
-1）xss 跨站脚本攻击 使用 `npm i xss ` 模块
+1.1）xss 跨站脚本攻击 使用 `npm i xss ` 模块
+
+1.2）使用`Content Security Policy 缩写 CSP` 也就是"网页安全政策"，开启方式有两种：
+
+第一种：HTTP 头信息的 `Content-Security-Policy` 字段，例子：
+
+```
+Content-Security-Policy: script-src 'self'; object-src 'none';style-src cdn.example.org third-party.org; child-src https:
+```
+
+第二种：通过网页的 `<meta>` 标签，例子：
+
+```html
+<meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none'; style-src cdn.example.org third-party.org; child-src https:">
+```
 
 2）csrf 跨站请求伪造，也被称为：one click attack/session riding，缩写为：CSRF/XSRF （攻击者盗用了你的身份，以你的名义发送恶意请求 ）
 
@@ -455,30 +516,12 @@ https://www.cnblogs.com/luckcs/articles/7105206.html
 
 为了防止SQL注入，可以将SQL中传入参数进行编码，而不是直接进行字符串拼接 
 
-使用  `node-mysql` 模块有以下四种：
-
-1）使用escape()对传入参数进行编码
-
-2）使用connection.query()的查询参数占位符
-
-```javascript
-var userId = 1, name = 'test';
-var query = connection.query('SELECT * FROM users WHERE id = ?, name = ?', [userId, name], function(err, results) {
-    // ...
-});
-console.log(query.sql);
-```
-
-3） 使用escapeId()编码SQL查询标识符：
-
-4）使用mysql.format()转义参数：
-
-```javascript
-var userId = 1;
-var sql = "SELECT * FROM ?? WHERE ?? = ?";
-var inserts = ['users', 'id', userId];
-sql = mysql.format(sql, inserts); // SELECT * FROM users WHERE id = 1
-```
+1. 使用  `sqlstring` 模块有以下四种：
+2. 给表名/字段名加前缀（避免被猜到）
+3. 报错隐藏表信息 (避免被看到, 12306 早期就出现过的问题)
+4. 过滤可以拼接 SQL 的关键字符
+5. 对用户输入进行转义
+6. 验证用户输入的类型 (避免 limit, order by 等注入)
 
 #### 3.说说dns劫持
 
@@ -595,9 +638,13 @@ console.log(a);
 1. JDK集合类TreeMap和TreeSet底层就是红黑树，JAVA8里的 HashMap也是红黑树
 2. Nodejs 的 `setTimeout` 和 `setInterval` 两个方法
 
-**AVL：**平衡二叉树
+**AVL：平衡二叉树**
 
+1. 它的左子树和右子树的深度之差（平衡因子）的绝度值不超过1
 
+   平衡因子（bf）：节点的左子树的深度减去右子树的深度 -1 <= bf <= 1
+
+2. 左子树和右子树都是一颗平衡二叉树
 
 #### 5 如何判断单向链表是否有环
 
