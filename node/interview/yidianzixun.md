@@ -301,13 +301,13 @@ TCP是传输层，而http是应用层
 
    2）服务器返回401状态，要求客户端提供用户名和密码进行认证。
 
-   ​           401 Unauthorized
+              401 Unauthorized
 
-   ​           WWW-Authenticate： Basic realm="WallyWorld"
+              WWW-Authenticate： Basic realm="WallyWorld"
 
    3）客户端将输入的用户名密码用Base64进行编码后，采用非加密的明文方式传送给服务器。
 
-   ​           Authorization: Basic xxxxxxxxxx.
+              Authorization: Basic xxxxxxxxxx.
 
    4）如果认证成功，则返回相应的资源。如果认证失败，则仍返回401状态，要求重新进行认证。
 
